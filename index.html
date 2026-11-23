@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,800;1,800&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=DM+Sans:wght@400;500;700&family=Figtree:wght@400;500;600;700&family=Space+Mono:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/motion@14.9.1/dist/motion.js"></script>
 <style>
 /* Idea: la ruta es un "string" de paneles conectados en serie. Un módulo = un panel.
    Una sola columna, alineada a la izquierda; el cable (línea vertical) une los paneles en orden. */
@@ -375,7 +376,7 @@ dl.con dd.rv{border-left:3px solid var(--sun);padding-left:10px;margin-top:6px;c
   #quiz-seccion .qz-q{min-height:calc(min(1100px,100vw - 40px)*9/16 - 90px);justify-content:center}
 }
 /* ---- Móvil: una columna, ilustración arriba y más chica ---- */
-@media (max-width:820px){
+@media (max-width:700px){
   #quiz-seccion{font-size:18px;padding:18px 16px 44px}
   #quiz-seccion .qz-portada{grid-template-columns:1fr}
   #quiz-seccion .qz-portada .qz-escena{order:-1;max-width:300px;margin:0 auto}
@@ -396,6 +397,81 @@ dl.con dd.rv{border-left:3px solid var(--sun);padding-left:10px;margin-top:6px;c
   #quiz-seccion .qz-confeti{display:none}
 }
 
+/* ---- movimiento ---- */
+@media (prefers-reduced-motion:no-preference){
+  .btn,.stepper button,.mod,.stages li{transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease,background-color .14s ease}
+  .btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 10px rgba(18,34,58,.12)}
+  .btn:active:not(:disabled){transform:scale(.97);box-shadow:none}
+  .mini a{transition:background-color .3s ease}
+  ul.checks input:checked+span{transition:color .25s ease}
+}
+html.sin-mov *,html.sin-mov *::before,html.sin-mov *::after{animation:none!important;transition:none!important}
+html.sin-mov #quiz-seccion .qz-confeti{display:none}
+.celebra{position:relative;width:132px;height:100px;margin:4px 0 6px}
+.celebra .pv{position:absolute;left:0;top:10px;width:104px;height:80px;border-radius:9px;padding:8px;gap:4px;border:0}
+.celebra .pv i{opacity:1;background:var(--sun);border-radius:3px}
+.celebra .chispa{position:absolute;left:52px;top:50px;width:9px;height:9px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--sun);opacity:0}
+.celebra .chispa:nth-child(odd){background:var(--cell)}
+/* ---- ampliar un dibujo a pantalla completa ---- */
+.zoom-btn{display:none}
+.zoom{position:fixed;inset:0;z-index:30;background:var(--bg);display:grid;place-items:center;overflow:hidden}
+.zoom .ill{min-width:0;width:min(100vw - 32px,1100px);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.zoom .cerrar{position:fixed;top:12px;right:12px;z-index:31}
+@media (max-width:700px) and (orientation:portrait){
+  .zoom .ill{width:calc(100vh - 130px);max-width:none;top:calc(50% - 30px);transform:translate(-50%,-50%) rotate(90deg)}
+  .zoom .cerrar{top:auto;bottom:14px;right:50%;transform:translateX(50%)}
+}
+/* ---- celular ---- */
+@media (max-width:640px){
+  .wrap{padding:0 14px}
+  main{padding:20px 0 56px}
+  .box{padding:16px}
+  .bar-top{position:static}
+  .bar-top .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;overflow:visible;padding:8px 10px}
+  .bar-top a{text-align:center;padding:10px 4px}
+  .bar-top .prog{grid-column:1/-1;margin:2px 0 0;text-align:center}
+  .fig .ill{min-width:0}
+  #hero .ill .s{display:none}
+  #hero .ill .tw{font-size:24px}
+  .zoom-btn{display:inline-block;align-self:flex-start}
+  .stages li{grid-template-columns:44px 1fr}
+  .stages li a{grid-column:2;justify-self:start}
+  .mod{grid-template-columns:46px 1fr}
+  .mod .st{grid-column:2;justify-self:start}
+  .mod .st:empty{display:none}
+  .pager{flex-direction:column;align-items:stretch}
+  .cover .row .btn{flex:1 1 100%;text-align:center}
+  .q{font-size:1.2rem}
+  .timeline{grid-template-columns:1fr;gap:2px 0}
+  .timeline b{margin-top:8px}
+  .fields{grid-template-columns:1fr 1fr}
+}
+/* ---- tablet ---- */
+@media (min-width:641px) and (max-width:1100px){
+  .wrap{max-width:820px;padding:0 28px}
+  body{font-size:1.06rem}
+}
+/* ---- pantallas táctiles: blancos de toque de al menos 44 px ---- */
+@media (pointer:coarse){
+  .stepper button{min-height:44px;padding:8px 18px}
+  .bar-top a{min-height:44px;display:flex;align-items:center;justify-content:center}
+  .btn{min-height:46px}
+  ul.checks label{padding:6px 0}
+  ul.checks input{width:22px;height:22px;margin-top:2px}
+  details.how summary,details.recap>summary,details.recap details summary,.help details summary,details.step summary{padding-block:8px}
+  .mini a{height:14px}
+  .term{padding-block:3px}
+  select,input[type=text],input[type=number]{min-height:44px}
+  #quiz-seccion .qz-chip{min-height:44px}
+  #quiz-seccion .qz-switch{width:64px;height:38px}
+  #quiz-seccion .qz-switch::after{width:30px;height:30px}
+  #quiz-seccion .qz-switch[aria-checked="true"]::after{transform:translateX(26px)}
+  #quiz-seccion .qz-puntos label{padding:5px 0}
+  #quiz-seccion .qz-debiles summary{padding-block:6px}
+}
+@supports (padding:max(0px)){
+  .bar-top .wrap,.wrap{padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right))}
+}
 #v-quiz.on{display:block}
 #quiz-seccion{min-height:calc(100vh - 56px)}
 
@@ -438,6 +514,7 @@ dl.con dd.rv{border-left:3px solid var(--sun);padding-left:10px;margin-top:6px;c
       <li><b>Un truco para acordarse</b><span>Cada tema cierra con una frase fácil de retener.</span></li>
       <li><b>Ayuda siempre a mano</b><span>Un botón abre los conceptos del tema y una explicación más simple.</span></li>
     </ul>
+    <div class="row"><button class="btn" id="mov-btn" type="button"></button><span class="small" id="mov-nota"></span></div>
   </div>
   <div class="box stack">
     <h3>Cada módulo tiene los mismos pasos</h3>
@@ -885,7 +962,7 @@ const PREGUNTAS = [
  pregunta:"¿Qué tiene que pasar para que el proyecto pierda plata?",
  respuestaModelo:"Cualquiera de tres cosas: que las ventas caigan 20%, que el precio baje 8% o que el costo del kit suba 17%. El mayor riesgo está en el margen por kit.",
  puntosClave:[{texto:"Ventas 20% bajo lo proyectado",keywords:["20%","20 %","veinte"]},{texto:"Precio 8% más bajo",keywords:["8%","8 %","ocho"]},{texto:"Costo del kit 17% más alto",keywords:["17%","17 %","diecisiete"]},{texto:"El riesgo está en el margen por kit",keywords:["margen"]}],
- ojoCon:"No digas que el proyecto es seguro: con el precio 10% más bajo el VAN es −$60,7 M."},
+ ojoCon:"No digas que el proyecto es seguro: con el precio 10% más bajo el VAN es −⁠$60,7 M."},
 {id:"f14",tema:"Finanzas",tipo:"abierta",icono:"calculadora",
  pregunta:"¿Cómo calcularon el valor de desecho?",
  respuestaModelo:"Con el método comercial: lo que valdrían los activos al venderlos, menos el impuesto por la ganancia. Da $25,6 millones, más $3,5 millones de garantías de arriendo: $29,1 millones en el año 5.",
@@ -1049,7 +1126,7 @@ const PREGUNTAS = [
 {id:"f21",tema:"Finanzas",tipo:"abierta",icono:"grafico",
  pregunta:"¿Qué pasa en el escenario pesimista?",
  respuestaModelo:"Con 250 clientes al año 5 en vez de 350, el VAN es negativo: menos $149 millones. Por eso el foco está en cumplir las ventas y cuidar el margen por kit.",
- puntosClave:[{texto:"Pesimista: 250 clientes al año 5",keywords:["250"]},{texto:"VAN de −$149,0 M",keywords:["149"]},{texto:"El foco: ventas y margen por kit",keywords:["margen","venta"]}],
+ puntosClave:[{texto:"Pesimista: 250 clientes al año 5",keywords:["250"]},{texto:"VAN de −⁠$149,0 M",keywords:["149"]},{texto:"El foco: ventas y margen por kit",keywords:["margen","venta"]}],
  ojoCon:"El optimista (400 clientes) da un VAN de $529,3 millones."},
 {id:"f22",tema:"Finanzas",tipo:"abierta",icono:"moneda",
  pregunta:"¿Cuánto deja cada kit?",
@@ -1091,7 +1168,7 @@ const CLAVE = "reviva-speed-quiz-v1";   // llave de localStorage
 const UMBRAL = 60;                       // bajo este % la pregunta cuenta como débil
 const CANTIDADES = [10, 20, 0];          // 0 = todas
 const TIEMPOS = [30, 60, 90];
-const sinMovimiento = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+const sinMov = () => (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) || document.documentElement.classList.contains("sin-mov");
 
 /* =====================================================================
    3. ILUSTRACIONES (SVG propio; íconos en una caja de 200 × 200)
@@ -1282,7 +1359,7 @@ function cuentaAtras(){
   mostrar("cuenta");
   $("#qz-cuenta-blob").innerHTML = '<svg viewBox="0 0 400 400">' + blob(200, 200, 170, 0) + '</svg>';
   const num = $("#qz-num"), pasos = ["3", "2", "1", "¡Ya!"]; let k = 0;
-  const dur = sinMovimiento ? 450 : 800;
+  const dur = sinMov() ? 450 : 800;
   (function siguiente(){
     if(k >= pasos.length){ mostrar("pregunta"); montarPregunta(false); return; }
     num.className = "qz-num entra"; num.textContent = pasos[k++];
@@ -1297,7 +1374,7 @@ function cuentaAtras(){
 function montarPregunta(conSalida){
   const slot = $("#qz-slot"), vieja = slot.firstElementChild;
   const poner = () => { slot.innerHTML = ""; slot.appendChild(construir()); arrancar(); };
-  if(conSalida && vieja && !sinMovimiento){ vieja.classList.remove("entra"); vieja.classList.add("sale"); setTimeout(poner, 300); }
+  if(conSalida && vieja && !sinMov()){ vieja.classList.remove("entra"); vieja.classList.add("sale"); setTimeout(poner, 300); }
   else poner();
 }
 function construir(){
@@ -1394,7 +1471,7 @@ function botonesFeedback(leerPuntaje){
     sesion.ult[id] = v; registrar(id, v); sesion.i++; datos.sesion = sesion; guardar(); sesion.i >= sesion.lista.length ? finDeRonda() : montarPregunta(true); };
   fila.appendChild(sig); fila.appendChild(rep); return fila;
 }
-function ponerFeedback(panel, foco, aviso){ const fb = $("#qz-fb"); fb.innerHTML = ""; fb.appendChild(panel); decir(aviso); foco.focus({preventScroll:true}); panel.scrollIntoView({behavior: sinMovimiento ? "auto" : "smooth", block:"nearest"}); }
+function ponerFeedback(panel, foco, aviso){ const fb = $("#qz-fb"); fb.innerHTML = ""; fb.appendChild(panel); decir(aviso); foco.focus({preventScroll:true}); panel.scrollIntoView({behavior: sinMov() ? "auto" : "smooth", block:"nearest"}); }
 
 // Teclas 1, 2 y 3 para alternativas.
 document.addEventListener("keydown", e => {
@@ -1431,6 +1508,7 @@ function cierre(){
   datos.historial = datos.historial.slice(-30); datos.sesion = null; guardar();
   mostrar("cierre");
   $("#qz-total").textContent = total + "%";
+  if(window.Motion && !sinMov()) try{ Motion.animate(0, total, { duration:.9, ease:"easeOut", onUpdate: v => { $("#qz-total").textContent = Math.round(v) + "%"; } }); }catch(e){}
   $("#qz-total-nota").textContent = "de puntaje total en " + ids.length + " preguntas.";
   const barras = $("#qz-barras"); barras.innerHTML = "";
   TEMAS.filter(t => porTema[t]).forEach(t => { const v = Math.round(porTema[t].reduce((a, b) => a + b, 0) / porTema[t].length);
@@ -1460,7 +1538,7 @@ function cierre(){
   confeti(); $("#qz-fin").focus({preventScroll:true}); decir("Terminaste el quiz con " + total + " por ciento.");
 }
 function confeti(){
-  const c = $("#qz-confeti"); c.innerHTML = ""; if(sinMovimiento) return;
+  const c = $("#qz-confeti"); c.innerHTML = ""; if(sinMov()) return;
   for(let i = 0; i < 44; i++){ const e = crear("i"); const col = i % 2 ? "#2457F5" : "#FF6A4D", s = 10 + Math.random() * 14;
     e.style.cssText = "left:" + (Math.random() * 100) + "%;width:" + s + "px;height:" + s + "px;animation-duration:" + (2.4 + Math.random() * 2.4) + "s;animation-delay:" + (Math.random() * 1.2) + "s";
     e.innerHTML = i % 3 === 0 ? '<svg viewBox="-10 -10 20 20"><circle r="6" fill="' + col + '"/></svg>' : i % 3 === 1 ? '<svg viewBox="-10 -10 20 20"><path fill="' + col + '" d="M0 -10Q0 0 10 0Q0 0 0 10Q0 0 -10 0Q0 0 0 -10Z"/></svg>' : '<svg viewBox="-10 -10 20 20"><rect x="-8" y="-3" width="16" height="6" rx="3" fill="' + col + '"/></svg>';
@@ -1492,6 +1570,50 @@ try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r));}cat
 let saveOk=true;
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));saveOk=true;}catch(e){saveOk=false;}const w=document.getElementById("warn");if(w)w.classList.toggle("hide",saveOk);};
 let keys={},ctx=null;
+/* ---------- movimiento (librería Motion) ----------
+   Todo es mejora progresiva: si Motion no carga, o la persona pide menos movimiento,
+   el contenido aparece igual, sin animación. Nada queda oculto esperando una animación. */
+const reduce=()=>matchMedia("(prefers-reduced-motion: reduce)").matches;
+const motionOn=()=>!!window.Motion&&!S.noMotion&&!reduce();
+const lista=t=>typeof t==="string"?[...document.querySelectorAll(t)]:t instanceof Element?[t]:Array.from(t||[]);
+function mo(t,k,o){
+  const els=lista(t).filter(Boolean);if(!motionOn()||!els.length)return null;
+  try{const a=Motion.animate(els,k,o);
+    if(!o||!o.keep)a.then(()=>els.forEach(e=>{e.style.transform="";e.style.opacity="";e.style.transformBox="";})).catch(()=>{});
+    return a;}catch(e){return null;}
+}
+const stg=(d,o)=>window.Motion?Motion.stagger(d,o):0;
+const POP={type:"spring",stiffness:520,damping:19};
+const SUAVE={type:"spring",stiffness:300,damping:28};
+const sube=(t,o)=>mo(t,{opacity:[0,1],y:[10,0]},Object.assign({duration:.28,ease:"easeOut",delay:stg(.045)},o||{}));
+const entra=(t,dx,o)=>mo(t,{opacity:[0,1],x:[dx,0]},Object.assign({duration:.26,ease:"easeOut",delay:stg(.035)},o||{}));
+function aplicarMov(){document.documentElement.classList.toggle("sin-mov",!!S.noMotion);}
+// Arma un dibujo por partes, en orden de lectura, y traza las líneas de los gráficos.
+function armarDibujo(fig){
+  if(!motionOn()||!fig)return;const svg=fig.querySelector("svg");if(!svg)return;
+  const piezas=[...svg.children].filter(e=>e.tagName!=="defs"&&getComputedStyle(e).opacity==="1"&&!e.matches("polyline.ln2"));
+  mo(piezas,{opacity:[0,1]},{duration:.22,delay:stg(Math.min(.03,.75/Math.max(1,piezas.length)))});
+  svg.querySelectorAll("polyline.ln2").forEach(pl=>{try{const L=pl.getTotalLength();pl.style.strokeDasharray=L;
+    const a=mo(pl,{strokeDashoffset:[L,0]},{duration:1,ease:"easeInOut",delay:.25,keep:true});if(a)a.then(()=>{pl.style.strokeDasharray="";pl.style.strokeDashoffset="";}).catch(()=>{});}catch(e){}});
+}
+// Portada: el viaje del panel, una sola vez por visita.
+let heroListo=false;
+function animarPortada(){
+  if(heroListo)return;heroListo=true;if(!motionOn())return;
+  const h=document.getElementById("hero"),q=c=>h.querySelectorAll(c);
+  h.querySelectorAll(".h-sun,.h-hub,.h-pyme").forEach(e=>e.style.transformOrigin="50% 100%");
+  mo(q(".h-sun"),{scale:[0,1],opacity:[0,1]},Object.assign({delay:.05},POP));
+  mo(q(".h-pl"),{opacity:[0,1],y:[16,0]},{duration:.35,ease:"easeOut",delay:stg(.09,{startDelay:.15})});
+  mo(q(".h-l1"),{opacity:[0,1]},{duration:.3,delay:.45});
+  mo(q(".h-p1"),{opacity:[0,1]},{duration:.3,delay:.55});
+  mo(q(".h-van"),{opacity:[0,1,1],x:[-96,-60,0]},{duration:.9,ease:"easeInOut",delay:.6});
+  mo(q(".h-p2"),{opacity:[0,1]},{duration:.3,delay:1.35});
+  mo(q(".h-hub"),{opacity:[0,1],scale:[.7,1]},Object.assign({delay:1.45},POP));
+  mo(q(".h-p3"),{opacity:[0,1]},{duration:.3,delay:1.8});
+  mo(q(".h-pyme"),{opacity:[0,1],scale:[.7,1]},Object.assign({delay:1.9},POP));
+  sube(document.querySelectorAll(".cover h1,.cover .lead,.cover .row,.cover #start-note"),{delay:stg(.07,{startDelay:.1})});
+  if(Motion.inView)try{Motion.inView("#stages",()=>{sube("#stages li",{delay:stg(.07)});},{amount:.25});}catch(e){}
+}
 document.addEventListener("keydown",e=>{if(e.ctrlKey||e.metaKey||e.altKey)return;if(e.target.closest&&e.target.closest("input,textarea,select,button,a,summary"))return;const f=keys[e.key];if(f){e.preventDefault();f();}});
 const $=(s,r=document)=>r.querySelector(s);
 const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;};
@@ -1724,14 +1846,14 @@ const M=[
  com:[["¿Por qué eligieron el método comercial para el valor de desecho?","Porque hay precios de mercado para activos usados y es el más conservador.\n• El método económico supone que la empresa sigue para siempre y sumaría un valor muy alto al año 5.\n• Resultado: $29,1 M, incluidas las garantías de arriendo.\n• Pesa poco en el VAN, así que no infla el resultado."]]},
 
 {inf:3,t:"El capital de trabajo",s:"Plan Financiero, sección 4",
- lee:["Es el colchón de plata para operar mientras las ventas todavía no cubren los gastos.","Método: <b>déficit acumulado máximo</b>. Se arma la caja mes a mes y se toma el saldo acumulado más negativo.","El peor mes es <b>agosto de 2027: −$161,9 M</b>.","Es alto porque hay cinco meses sin ventas, los componentes se pagan al contado y la mitad de cada venta se cobra un mes después.","Se invierte en el año 0 y <b>se recupera en el año 5</b>."],
- cards:[["¿Cómo se calculó el capital de trabajo?","Método del déficit acumulado máximo: se arma la caja mes a mes del año 1 y se toma el saldo acumulado más negativo.\nEs agosto de 2027: −$161,9 M. Se recupera en el año 5."],
+ lee:["Es el colchón de plata para operar mientras las ventas todavía no cubren los gastos.","Método: <b>déficit acumulado máximo</b>. Se arma la caja mes a mes y se toma el saldo acumulado más negativo.","El peor mes es <b>agosto de 2027: −⁠$161,9 M</b>.","Es alto porque hay cinco meses sin ventas, los componentes se pagan al contado y la mitad de cada venta se cobra un mes después.","Se invierte en el año 0 y <b>se recupera en el año 5</b>."],
+ cards:[["¿Cómo se calculó el capital de trabajo?","Método del déficit acumulado máximo: se arma la caja mes a mes del año 1 y se toma el saldo acumulado más negativo.\nEs agosto de 2027: −⁠$161,9 M. Se recupera en el año 5."],
  ["¿Por qué el capital de trabajo es el 59% de la inversión?","REVIVA paga cinco meses de sueldos y arriendos antes de vender. Después compra los componentes al contado y cobra la mitad de cada venta un mes más tarde."],
  ["¿Por qué ese método y no otro?","Es el más preciso: recoge la estacionalidad y los desfases de cobro y pago. Es el único que capta que los primeros cinco meses no hay ventas."],
  ["¿Cuáles son los supuestos de cobro y pago?","Se cobra 50% al firmar y el resto al mes siguiente. Los componentes del kit se pagan al contado. Los paneles se retiran un mes antes de venderse. Las generadoras pagan el retiro a 30 días."],
  ["¿Hace falta más capital de trabajo después del año 1?","No. El ciclo normal del año 5 pide $101,4 M, menos que los $161,9 M invertidos al inicio."]],
  cif:[["Capital de trabajo","millones de $",161.9,"Déficit acumulado máximo: el peor mes de caja, agosto de 2027."],["Porcentaje de la inversión que es capital de trabajo","%",59,"$161,9 M de $275,6 M."]],
- com:[["¿Por qué necesitan $162 millones de capital de trabajo?","Por el déficit acumulado máximo del año 1.\n• Enero a mayo: solo gastos, sin ventas.\n• Desde junio se vende, pero los componentes se pagan al contado y la mitad de la venta se cobra al mes siguiente.\n• El peor mes es agosto de 2027: −$161,9 M.\n• Alcanza para los 5 años: el ciclo normal del año 5 pide $101,4 M."]]},
+ com:[["¿Por qué necesitan $162 millones de capital de trabajo?","Por el déficit acumulado máximo del año 1.\n• Enero a mayo: solo gastos, sin ventas.\n• Desde junio se vende, pero los componentes se pagan al contado y la mitad de la venta se cobra al mes siguiente.\n• El peor mes es agosto de 2027: −⁠$161,9 M.\n• Alcanza para los 5 años: el ciclo normal del año 5 pide $101,4 M."]]},
 
 {inf:3,t:"El financiamiento",s:"Plan Financiero, sección 2",
  lee:["<b>60% socios</b> ($165,3 M) y <b>40% crédito</b> bancario ($110,2 M).","Crédito a <b>UF + 5,0%</b>, 5 años, <b>sin gracia</b>, sistema francés.","Cuota anual fija de <b>$25.459.006</b>.","Garantía FOGAPE. Bancos a cotizar: BancoEstado, Santander y BCI.","La primera cuota se paga con la holgura del capital de trabajo ($49,6 M)."],
@@ -1789,12 +1911,12 @@ const M=[
  ["¿Por qué el año 1 queda bajo el equilibrio?","Paga doce meses de costos fijos con solo siete de venta (130 kits frente a 180), y la depreciación acelerada carga casi todo el furgón ese año. Lo cubre el capital de trabajo."],
  ["¿Qué es el margen de seguridad?","Cuánto pueden caer las ventas antes de tener pérdida: (ventas − equilibrio) ÷ ventas. Es 3,3% en 2028 y 47% en 2031."],
  ["¿Qué dice la sensibilidad?","El VAN llega a cero si las ventas caen 20%, si el precio baja 8% o si el costo del kit sube 17%. El mayor riesgo está en el margen por kit."],
- ["¿Qué pasa en el escenario pesimista?","Con 250 clientes al año 5 en vez de 350, el VAN es −$149,0 M. Con el precio 10% más bajo, −$60,7 M. Con el costo del kit 20% más alto, −$61,4 M."],
+ ["¿Qué pasa en el escenario pesimista?","Con 250 clientes al año 5 en vez de 350, el VAN es −⁠$149,0 M. Con el precio 10% más bajo, −⁠$60,7 M. Con el costo del kit 20% más alto, −⁠$61,4 M."],
  ["¿Y si el primer año parte más lento?","Con 90 kits el año 1 en vez de 130, el VAN sigue positivo: $237,5 M. El capital de trabajo tendría que ser mayor."]],
  calc:"pe",
  cif:[["Punto de equilibrio en régimen","kits al año",184,"Costos fijos $423,2 M ÷ margen por cliente $2,30 M (2028)."],["Caída de ventas que deja el VAN en cero","%",20,"Precio: −8%. Costo del kit: +17%."],["Margen de seguridad en 2031","%",47,"(350 − 186) ÷ 350."]],
  com:[["¿Por qué pierden plata el primer año?","Por dos razones previstas:\n• Doce meses de costos fijos con solo siete de venta: 130 kits frente a un equilibrio de 180.\n• La depreciación acelerada carga casi todo el furgón en el año 1.\nSin depreciación, el equilibrio en efectivo baja a 151 kits. La pérdida la cubre el capital de trabajo."],
- ["¿Qué tiene que pasar para que este proyecto pierda plata?","Cualquiera de estas tres cosas, por separado:\n• Ventas 20% bajo lo proyectado.\n• Precio 8% más bajo.\n• Costo de los componentes del kit 17% más alto.\nEl más sensible es el margen por kit. En el escenario pesimista (250 clientes al año 5) el VAN es −$149,0 M."]]}
+ ["¿Qué tiene que pasar para que este proyecto pierda plata?","Cualquiera de estas tres cosas, por separado:\n• Ventas 20% bajo lo proyectado.\n• Precio 8% más bajo.\n• Costo de los componentes del kit 17% más alto.\nEl más sensible es el margen por kit. En el escenario pesimista (250 clientes al año 5) el VAN es −⁠$149,0 M."]]}
 ];
 
 const TEO=[
@@ -1871,9 +1993,9 @@ const TEO=[
  ["UF y tasa real","La UF se reajusta con la inflación. Una tasa en UF es real: ya no incluye inflación. Una tasa en pesos es nominal.","El crédito es a UF + 5,0%, igual que los flujos, que están en pesos constantes."],
  ["Interés corriente y tasa máxima convencional","El interés corriente es el promedio que cobran los bancos. La tasa máxima convencional es el tope legal. Ambos los publica la CMF.","4,02% y 6,03% para créditos en UF sobre 2.000 UF. Se usó el punto medio."],
  ["Escudo tributario y cobertura de la deuda","Escudo: el impuesto que se ahorra porque los intereses son gasto. Cobertura: cuántas veces la caja de la operación alcanza para pagar la cuota; los bancos piden al menos 1,2 veces.","Escudo total de $4,3 M. Cobertura de 1,3 veces en 2028 y hasta 11,4 después."]],
-/*19*/[["Flujo de caja puro","El flujo del proyecto sin deuda, como si los socios pusieran toda la inversión. Mide si el negocio es bueno por sí solo.","Parte en −$275,6 M y llega a $481,1 M en el año 5."],
+/*19*/[["Flujo de caja puro","El flujo del proyecto sin deuda, como si los socios pusieran toda la inversión. Mide si el negocio es bueno por sí solo.","Parte en −⁠$275,6 M y llega a $481,1 M en el año 5."],
  ["Costo fijo, costo variable y margen de contribución","El costo variable cambia con cada unidad vendida. El fijo existe aunque no se venda. El margen de contribución es el ingreso menos el costo variable: lo que queda para pagar los fijos.","Variable: inversor, estructura e instalación. Fijo: sueldos y arriendos. Margen: ~38%, unos $2,3 M por kit."],
- ["EBITDA","Utilidad antes de intereses, impuestos, depreciación y amortización. Muestra cuánta caja deja la operación.","−$45,7 M el año 1, $34,1 M el año 2 y $384,2 M el año 5."],
+ ["EBITDA","Utilidad antes de intereses, impuestos, depreciación y amortización. Muestra cuánta caja deja la operación.","−⁠$45,7 M el año 1, $34,1 M el año 2 y $384,2 M el año 5."],
  ["Pérdida tributaria de arrastre","Si una empresa pierde plata un año, puede descontar esa pérdida de las utilidades de los años siguientes y pagar menos impuesto.","La pérdida de los años 1 y 2 se termina de usar en el año 3."]],
 /*20*/[["Tasa de descuento","La rentabilidad mínima que se le exige a un proyecto por su riesgo. Con ella se traen los flujos futuros a plata de hoy.","7,28% para el flujo puro y 6,98% para el del inversionista."],
  ["CAPM","Modelo que calcula esa rentabilidad mínima: tasa libre de riesgo más un premio por riesgo. El premio es la beta por la prima de mercado (lo que rinde el mercado sobre la tasa libre de riesgo).","Ku = 2,50% + 0,977 × 3,77% + 1,10% de riesgo país = 7,28%."],
@@ -1888,7 +2010,7 @@ const TEO=[
 /*22*/[["Punto de equilibrio","La cantidad que hay que vender para no ganar ni perder: los ingresos cubren justo todos los costos. Se calcula como costos fijos dividido por margen de contribución unitario.","Unos 184 kits al año. El equilibrio en efectivo no cuenta la depreciación."],
  ["Margen de seguridad","Cuánto pueden caer las ventas antes de entrar en pérdida.","3,3% en 2028 y 47% en 2031."],
  ["Análisis de sensibilidad","Cambiar una variable a la vez (ventas, precio o costo) para ver cuánto cambia el VAN. Muestra de qué depende más el resultado.","El VAN llega a cero con ventas −20%, precio −8% o costo del kit +17%."],
- ["Análisis de escenarios","Cambiar varias cosas a la vez para describir un futuro completo: pesimista, base y optimista.","Pesimista (250 clientes al año 5): VAN de −$149,0 M. Optimista (400): $529,3 M."]]
+ ["Análisis de escenarios","Cambiar varias cosas a la vez para describir un futuro completo: pesimista, base y optimista.","Pesimista (250 clientes al año 5): VAN de −⁠$149,0 M. Optimista (400): $529,3 M."]]
 ];
 
 /* ---------- ilustraciones (SVG propio, 520×240) ---------- */
@@ -1901,15 +2023,15 @@ const ci=(x,y,r,c)=>'<circle cx="'+x+'" cy="'+y+'" r="'+r+'" class="'+c+'"/>';
 const bx=(x,y,w,h,c,l1,l2,tc="t")=>rc(x,y,w,h,c)+tx(x+w/2,y+h/2+(l2?-3:5),l1,tc)+(l2?tx(x+w/2,y+h/2+14,l2,tc==="tw"?"sw":"s"):"");
 const pv=(x,y,w,h,cols=3,rows=2)=>{let o=rc(x,y,w,h,"f-cell",3);const cw=(w-4-(cols-1)*2)/cols,ch=(h-4-(rows-1)*2)/rows;for(let r=0;r<rows;r++)for(let c=0;c<cols;c++)o+=rc(x+2+c*(cw+2),y+2+r*(ch+2),cw,ch,"f-glass",1);return o;};
 const HERO=()=>sv(
-  ci(70,52,26,"f-sun")+ln(0,196,640,196,"ln")+
-  [0,1,2].map(k=>'<polygon points="'+(34+k*52)+',196 '+(48+k*52)+',150 '+(88+k*52)+',150 '+(74+k*52)+',196" class="f-cell"/>'+ln(41+k*52,173,81+k*52,173,"gl")+ln(61+k*52,150,54+k*52,196,"gl")).join("")+
-  tx(100,222,"Planta solar","s")+
-  '<path d="M196 190 C230 150 250 150 262 170" class="dash" marker-end="url(#ah)"/>'+
-  rc(262,150,74,40,"f-surf",8)+rc(312,158,20,16,"f-glass",3)+ci(280,192,9,"f-ink")+ci(318,192,9,"f-ink")+tx(292,176,"Retiro","s")+
-  '<path d="M340 170 C356 150 366 146 378 146" class="dash" marker-end="url(#ah)"/>'+
-  rc(380,104,104,92,"f-cell",6)+tx(432,132,"REVIVA","tw")+pv(396,146,30,22)+pv(438,146,30,22)+rc(424,174,16,22,"f-glass",2)+tx(432,222,"Prueba y certificación","s")+
-  '<path d="M486 150 C504 128 516 124 528 128" class="dash" marker-end="url(#ah)"/>'+
-  rc(528,138,96,58,"f-surf",4)+'<polygon points="522,138 576,104 630,138" class="f-sunk"/>'+'<polygon points="540,134 566,117 600,117 574,134" class="f-cell"/>'+ln(553,125.5,587,125.5,"gl")+rc(566,164,20,32,"f-sunk",2)+tx(576,222,"Kit en la pyme","s"),
+  '<g class="h-sun">'+ci(70,52,26,"f-sun")+'</g>'+ln(0,196,640,196,"ln")+
+  [0,1,2].map(k=>'<g class="h-pl"><polygon points="'+(34+k*52)+',196 '+(48+k*52)+',150 '+(88+k*52)+',150 '+(74+k*52)+',196" class="f-cell"/>'+ln(41+k*52,173,81+k*52,173,"gl")+ln(61+k*52,150,54+k*52,196,"gl")+'</g>').join("")+
+  '<g class="h-l1">'+tx(100,222,"Planta solar","s")+'</g>'+
+  '<path d="M196 190 C230 150 250 150 262 170" class="dash h-p1" marker-end="url(#ah)"/>'+
+  '<g class="h-van">'+rc(262,150,74,40,"f-surf",8)+rc(312,158,20,16,"f-glass",3)+ci(280,192,9,"f-ink")+ci(318,192,9,"f-ink")+tx(292,176,"Retiro","s")+'</g>'+
+  '<path d="M340 170 C356 150 366 146 378 146" class="dash h-p2" marker-end="url(#ah)"/>'+
+  '<g class="h-hub">'+rc(380,104,104,92,"f-cell",6)+tx(432,132,"REVIVA","tw")+pv(396,146,30,22)+pv(438,146,30,22)+rc(424,174,16,22,"f-glass",2)+tx(432,222,"Prueba y certificación","s")+'</g>'+
+  '<path d="M486 150 C504 128 516 124 528 128" class="dash h-p3" marker-end="url(#ah)"/>'+
+  '<g class="h-pyme">'+rc(528,138,96,58,"f-surf",4)+'<polygon points="522,138 576,104 630,138" class="f-sunk"/>'+'<polygon points="540,134 566,117 600,117 574,134" class="f-cell"/>'+ln(553,125.5,587,125.5,"gl")+rc(566,164,20,32,"f-sunk",2)+tx(576,222,"Kit en la pyme","s")+'</g>',
  "Recorrido de un panel: de la planta solar al furgón de retiro, al hub de REVIVA y al techo de una pyme",240,640);
 const lineChart=(vals,x0,x1,yTop,yBot,min,max)=>{const X=k=>x0+k*(x1-x0)/(vals.length-1),Y=v=>yTop+(max-v)*(yBot-yTop)/(max-min);return{X,Y,path:'<polyline points="'+vals.map((v,k)=>X(k).toFixed(1)+","+Y(v).toFixed(1)).join(" ")+'" class="ln2"/>'};};
 const FIG=[
@@ -1932,7 +2054,7 @@ const FIG=[
 /*15*/()=>{const p=[[70,"Copiapó","Certificación","completa"],[220,"Santiago","Control de","recepción"],[330,"Santiago","Revisión","del kit"],[460,"Cliente","Verificación","en terreno"]];let o=ln(70,110,460,110,"ln2")+tx(260,26,"Cuatro controles de calidad","b");p.forEach((x,k)=>{o+=ci(x[0],110,20,"f-cell")+tx(x[0],116,k+1,"tw b")+tx(x[0],74,x[1],"t")+tx(x[0],156,x[2],"s")+tx(x[0],172,x[3],"s");});return sv(o+tx(145,100,"800 km","s"),"Los cuatro controles de calidad: certificación completa en Copiapó, control de recepción y revisión del kit en Santiago, y verificación en el local del cliente");},
 /*16*/()=>{const d=[[90.83,"f-cell","Activos fijos: $90,8 M"],[19.29,"f-good","Intangibles: $19,3 M"],[3.49,"f-ink","Garantías de arriendo: $3,5 M"],[161.94,"f-sun","Capital de trabajo: $161,9 M (59%)"]];let o=tx(260,26,"Inversión inicial: $275,6 M","b"),x=30;d.forEach((v,k)=>{const w=v[0]/275.56*460;o+=rc(x,46,w,54,v[1],0);x+=w;o+=rc(40,124+k*28,14,14,v[1],3)+tx(64,136+k*28,v[2],"t","start");});return sv(o,"Inversión inicial de 275,6 millones: activos fijos 90,8; intangibles 19,3; garantías 3,5 y capital de trabajo 161,9 millones");},
 /*17*/()=>{const v=[-13,-29.2,-45.4,-74.9,-109.4,-145.8,-158.4,-161.9,-156.9,-147.2,-135.2,-112.4],c=lineChart(v,50,480,50,190,-161.9,0);let o=tx(260,24,"Saldo de caja acumulado, año 1","b")+ln(50,50,480,50)+tx(40,54,"0","s","end")+c.path;"EFMAMJJASOND".split("").forEach((m,k)=>o+=tx(c.X(k),214,m,"s"));
-  return sv(o+ci(c.X(7),c.Y(-161.9),7,"f-sun")+ln(c.X(7),c.Y(-161.9)-9,c.X(7),128)+tx(c.X(7),120,"Agosto: −$161,9 M","t")+ln(c.X(0),228,c.X(4),228)+tx(c.X(2),238,"Sin ventas","s"),"El saldo de caja acumulado del año 1 baja hasta menos 161,9 millones en agosto y después empieza a subir",244);},
+  return sv(o+ci(c.X(7),c.Y(-161.9),7,"f-sun")+ln(c.X(7),c.Y(-161.9)-9,c.X(7),128)+tx(c.X(7),120,"Agosto: −⁠$161,9 M","t")+ln(c.X(0),228,c.X(4),228)+tx(c.X(2),238,"Sin ventas","s"),"El saldo de caja acumulado del año 1 baja hasta menos 161,9 millones en agosto y después empieza a subir",244);},
 /*18*/()=>{const d=[[5.51,19.95],[4.51,20.95],[3.47,21.99],[2.37,23.09],[1.21,24.25]];let o=tx(260,24,"La cuota es siempre $25,5 M","b");d.forEach((x,k)=>{const X=70+k*84,hi=x[0]*5.2,ha=x[1]*5.2;o+=rc(X,190-ha,54,ha,"f-cell",0)+rc(X,190-ha-hi,54,hi,"f-sun",0)+tx(X+27,208,"Año "+(k+1),"s");});
   return sv(o+ln(50,190,480,190)+rc(110,220,12,12,"f-sun",2)+tx(128,231,"Interés: baja cada año","s","start")+rc(300,220,12,12,"f-cell",2)+tx(318,231,"Devolución del capital","s","start"),"Cuota fija de 25,5 millones al año: el interés baja y la devolución del capital sube",240);},
 /*19*/()=>{const v=[-275.6,-45.7,34.1,127.4,207.1,481.1],z=138,s=.2247;let o=tx(150,24,"Flujo de caja puro (M$)","b");v.forEach((x,k)=>{const X=50+k*76,h=Math.abs(x)*s;o+=rc(X,x<0?z:z-h,52,h,x<0?"f-bad":"f-good",0)+tx(X+26,x<0?z+h+14:z-h-6,(x<0?"−":"")+String(Math.abs(x)).replace(".",","),"s")+tx(X+26,x<0?z-6:z+14,"Año "+k,"s");});return sv(o+ln(40,z,500,z),"Flujo de caja puro por año: menos 275,6 en el año 0, menos 45,7 en el año 1 y positivo desde el año 2 hasta 481,1 en el año 5");},
@@ -1959,7 +2081,7 @@ const INTRO=[
 ["Un equipo chico de 15 personas, con todo lo demás externalizado.","Ya sabes cuánto se vende. Ahora toca ver quién hace el trabajo.","1 + 2 + 6 + 2 + 1 + 3 = 15: CEO, gerentes, técnicos, instaladores, calidad y vendedores."],
 ["Los paneles se certifican en Copiapó y pasan cuatro controles antes de funcionar en el local del cliente.","Con el equipo definido, falta ver cómo opera el negocio día a día.","Cuatro controles, cuatro lugares: Copiapó, la bodega de Santiago, el kit armado y el techo del cliente."],
 ["Para partir se necesitan $275,6 M, y más de la mitad es capital de trabajo.","Empieza el plan financiero. La primera pregunta es cuánta plata hay que poner.","La depreciación no es plata que sale: se resta para pagar menos impuesto y después se suma de vuelta."],
-["El capital de trabajo es el peor saldo de caja del año 1: −$161,9 M en agosto de 2027.","De los $275,6 M, la partida más grande es el capital de trabajo. Aquí se entiende por qué.","Piensa en un estanque que se vacía hasta agosto y después se empieza a llenar. El capital de trabajo es lo más vacío que llega a estar."],
+["El capital de trabajo es el peor saldo de caja del año 1: −⁠$161,9 M en agosto de 2027.","De los $275,6 M, la partida más grande es el capital de trabajo. Aquí se entiende por qué.","Piensa en un estanque que se vacía hasta agosto y después se empieza a llenar. El capital de trabajo es lo más vacío que llega a estar."],
 ["Los socios ponen el 60% y un banco presta el 40%, a UF + 5% y en cinco cuotas iguales.","Ya sabes cuánta plata se necesita. Ahora toca ver de dónde sale.","Sistema francés: cuota fija. Cada año pagas menos interés y devuelves más capital."],
 ["El flujo puro muestra si el negocio es bueno por sí solo, sin deuda.","Con la inversión y el financiamiento claros, se proyecta la plata que entra y sale cada año.","El orden del flujo: ingresos, menos costos, menos depreciación, menos impuesto. Después se suma la depreciación y se resta la inversión."],
 ["La tasa de descuento es la rentabilidad mínima que se le exige al proyecto: 7,28% sin deuda.","Ya tienes los flujos. Para saber cuánto valen hoy, hay que descontarlos con una tasa.","Tres tasas, tres dueños: Ku es del negocio, Ke de los socios y Kd del banco. El WACC promedia Ke y Kd."],
@@ -1984,7 +2106,7 @@ document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest
   const host=b.closest("p,li,dd,.a,.def,.ans")||b.parentElement,old=host.querySelector(":scope > .termdef"),same=old&&old.dataset.k===b.dataset.k;
   if(old)old.remove();host.querySelectorAll(".term").forEach(x=>x.setAttribute("aria-expanded","false"));
   if(same)return;
-  const d=el("span","termdef");d.dataset.k=b.dataset.k;d.appendChild(txt("b",null,b.dataset.k+": "));d.appendChild(document.createTextNode(DEFS[b.dataset.k]));host.appendChild(d);b.setAttribute("aria-expanded","true");});
+  const d=el("span","termdef");d.dataset.k=b.dataset.k;d.appendChild(txt("b",null,b.dataset.k+": "));d.appendChild(document.createTextNode(DEFS[b.dataset.k]));host.appendChild(d);b.setAttribute("aria-expanded","true");mo(d,{opacity:[0,1],y:[-5,0]},{duration:.18,ease:"easeOut"});});
 /* ---------- leer en voz alta ---------- */
 const canSpeak=()=>"speechSynthesis" in window&&typeof SpeechSynthesisUtterance==="function";
 function stopSpeak(){try{if(canSpeak())speechSynthesis.cancel();}catch(e){}}
@@ -1995,6 +2117,14 @@ function speakBtn(getText){
     u.onstart=()=>{on=true;b.textContent="Detener la lectura";};u.onend=u.onerror=()=>{on=false;b.textContent="Escuchar";};
     speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){b.textContent="Lectura no disponible aquí";b.disabled=true;}};
   return b;
+}
+function ampliar(svgHtml,volverA){
+  const z=el("div","zoom");z.setAttribute("role","dialog");z.setAttribute("aria-modal","true");z.setAttribute("aria-label","Dibujo ampliado");z.innerHTML=svgHtml;
+  const c=txt("button","btn cerrar","Cerrar el dibujo");c.type="button";z.appendChild(c);
+  const cerrar=()=>{z.remove();document.removeEventListener("keydown",esc);if(volverA)volverA.focus();};
+  const esc=e=>{if(e.key==="Escape")cerrar();};
+  c.onclick=cerrar;z.onclick=e=>{if(e.target===z||e.target.closest("svg"))cerrar();};
+  document.addEventListener("keydown",esc);document.body.appendChild(z);c.focus();mo(z,{opacity:[0,1]},{duration:.18});
 }
 const mins=i=>{const m=M[i];return Math.max(10,Math.round((allCards(i).length*.5+(m.cif?m.cif.length*.5:0)+(m.calc?4:0)+m.com.length*2+3)/5)*5);};
 const allCards=i=>TEO[i].map((t,k)=>({k:"t"+k,q:"Explica el concepto: "+t[0],a:t[1]+"\n\nEn REVIVA: "+t[2]})).concat(M[i].cards.map((c,k)=>({k:String(k),q:c[0],a:c[1]})));
@@ -2016,6 +2146,11 @@ const TEMA_QZ=i=>i<4?"Idea de negocio":i<9?"Estrategia":i<13?"Marketing":i<15?"O
 function renderInicio(){
   const qr=$("#qz-resumen");if(qr&&window.QZ){const r=QZ.resumen();qr.textContent=r.vistas?("Has respondido "+r.vistas+" de "+r.total+" preguntas."+(r.debil?" Tu tema más débil es "+r.debil.tema+" ("+r.debil.v+"%).":"")+(r.racha>1?" Llevas "+r.racha+" días seguidos.":"")):"Todavía no lo has probado. Diez preguntas toman unos diez minutos.";}
   const h=$("#hero");if(!h.firstChild)h.innerHTML=HERO();
+  const mb=$("#mov-btn"),mn=$("#mov-nota");
+  mb.textContent=S.noMotion?"Activar las animaciones":"Quitar las animaciones";mb.disabled=reduce();
+  mn.textContent=reduce()?"Tu dispositivo pide menos movimiento, así que las animaciones están apagadas.":S.noMotion?"Las animaciones están apagadas.":"Si el movimiento te distrae, apágalo aquí.";
+  mb.onclick=()=>{S.noMotion=!S.noMotion;save();aplicarMov();renderInicio();};
+  animarPortada();
   const nx=firstOpen(),any=M.some((m,i)=>modCount(i)),st=$("#start"),note=$("#start-note");
   if(nx<0){st.textContent="Ir al ensayo general";st.href="#ensayo";note.textContent="Cerraste los 22 módulos. Queda el ensayo general.";}
   else{st.textContent=any?"Seguir donde quedé":"Iniciar el recorrido";st.href="#m"+(nx+1);note.textContent=any?"Vas en el módulo "+(nx+1)+" de "+M.length+": "+M[nx].t+".":"Parte por el módulo 1: "+M[0].t+". Toma unos "+mins(0)+" minutos.";}
@@ -2049,13 +2184,15 @@ function renderRoute(){
   const go=$("#go");
   if(nx<0){go.textContent="Ir al ensayo general";go.href="#ensayo";}
   else{go.textContent=(nx===0&&!modCount(0)?"Empezar por el módulo 1":"Seguir en el módulo "+(nx+1)+": "+M[nx].t);go.href="#m"+(nx+1);}
+  entra(ol.querySelectorAll(".mod"),-10,{duration:.22,delay:stg(.012)});
+  {const sg=ol.querySelector(".mod.next .st");if(sg)mo(sg,{scale:[1,1.14,1]},{duration:.55,delay:.5,repeat:1});}
   const how=$("#how");if(how&&!how.dataset.set){how.dataset.set="1";how.open=!M.some((m,i)=>modCount(i));}
   prog();
 }
 function prog(){const d=M.filter((m,i)=>modDone(i)).length;$("#prog").textContent=(saveOk?"Guardado: ":"Sin guardar: ")+d+" de "+M.length+" módulos";}
 
 /* ---------- vista de módulo ---------- */
-let cur=0,curStep="lee";
+let cur=0,curStep="lee",modAnt=-1,recienListo=null;
 function renderMod(i,step){
   cur=i;keys={};ctx=null;const m=M[i],steps=stepsOf(i);
   if(!step){const f=steps.find(x=>!stepDone(i,x[0]));step=f?f[0]:"lee";}
@@ -2071,7 +2208,7 @@ function renderMod(i,step){
   v.appendChild(ul);
   const pane=el("div","box pane");v.appendChild(pane);
   const idx=steps.findIndex(x=>x[0]===step);
-  const advance=()=>{save();const nxt=steps[idx+1];if(nxt)renderMod(i,nxt[0]);else renderEnd(i);};
+  const advance=()=>{save();recienListo=step;const nxt=steps[idx+1];if(nxt)renderMod(i,nxt[0]);else renderEnd(i);};
   ({lee:paneLee,cards:paneCards,cif:paneCif,calc:paneCalc,com:paneCom})[step](pane,i,advance);
   v.appendChild(helpBox(i));
   const pg=el("div","pager");
@@ -2085,6 +2222,8 @@ function renderMod(i,step){
     const n=txt("button","btn","Cancelar");n.onclick=()=>renderMod(i,step);right.appendChild(y);right.appendChild(n);n.focus();};
   right.appendChild(rs);pg.appendChild(right);
   v.appendChild(pg);prog();
+  if(modAnt!==i){modAnt=i;mo(mini.querySelector(".now"),{scale:[.4,1]},POP);sube(v.querySelectorAll(".crumb,h2"),{delay:stg(.05)});}
+  if(recienListo){const k=steps.findIndex(x=>x[0]===recienListo);if(k>=0)mo(ul.children[k].firstChild,{scale:[.8,1]},POP);recienListo=null;}
 }
 function renderEnd(i){
   keys={};ctx=null;
@@ -2092,6 +2231,7 @@ function renderEnd(i){
   v.appendChild(txt("p","crumb","Módulo "+(i+1)+" de "+M.length));
   v.appendChild(txt("h2",null,"Módulo cerrado: "+M[i].t));
   const b=el("div","box pane");
+  const cel=el("div","celebra");cel.setAttribute("aria-hidden","true");const pvx=el("span","pv");for(let k=0;k<6;k++)pvx.appendChild(el("i"));cel.appendChild(pvx);for(let k=0;k<10;k++)cel.appendChild(el("i","chispa"));b.appendChild(cel);
   const weak=M[i].com.filter((c,j)=>st(i).com[j]<2).length;
   b.appendChild(txt("p",null,weak?"Quedaron "+weak+" preguntas de defensa sin respuesta sólida. Van a salir primero en el ensayo general.":"Todas las preguntas de defensa quedaron sólidas."));
   b.appendChild(txt("p","small",i+1<M.length?"Buen momento para una pausa de cinco minutos antes de seguir. El avance queda guardado.":"Terminaste los 22 módulos. Date una pausa antes del ensayo general."));
@@ -2101,12 +2241,20 @@ function renderEnd(i){
   if(window.QZ){const qb=txt("button","btn","Practicar "+TEMA_QZ(i)+" en el Speed Quiz");qb.type="button";qb.onclick=()=>{location.hash="quiz";setTimeout(()=>QZ.practicar(TEMA_QZ(i)),60);};row.appendChild(qb);}
   const a2=el("a","btn");a2.href="#ruta";a2.textContent="Ver la ruta";row.appendChild(a2);
   b.appendChild(row);v.appendChild(b);prog();
+  // Celebración breve: el panel se enciende celda por celda y suelta chispas.
+  mo(pvx.children,{opacity:[.15,1],scale:[.5,1]},Object.assign({delay:stg(.09,{startDelay:.1})},POP));
+  mo(pvx,{scale:[.9,1.06,1]},{duration:.5,delay:.75});
+  [...cel.querySelectorAll(".chispa")].forEach((c,k)=>{const ang=k/10*Math.PI*2,r=46+(k%3)*12;mo(c,{opacity:[0,1,0],x:[0,Math.cos(ang)*r],y:[0,Math.sin(ang)*r],scale:[1,.5]},{duration:.75,ease:"easeOut",delay:.72});});
+  sube([v.querySelector("h2"),...b.querySelectorAll("p,.row")],{delay:stg(.07,{startDelay:.25})});
+  mo(document.getElementById("prog"),{scale:[1,1.12,1]},{duration:.45,delay:.9});
 }
 function conList(i){const dl=el("dl","con");TEO[i].forEach(t=>{dl.appendChild(txt("dt",null,t[0]));dl.appendChild(txt("dd",null,t[1]));dl.appendChild(txt("dd","rv","En REVIVA: "+t[2]));});return dl;}
 function paneLee(p,i,adv){
   const m=M[i],I=INTRO[i],slides=[];
   slides.push(c=>{
     const f=el("figure","fig");f.innerHTML=FIG[i]();c.appendChild(f);
+    const zb=txt("button","btn zoom-btn","Ampliar el dibujo");zb.type="button";zb.onclick=()=>ampliar(FIG[i](),zb);c.appendChild(zb);
+    f.onclick=()=>{if(matchMedia("(max-width:640px)").matches)ampliar(FIG[i](),zb);};
     c.appendChild(txt("p","bigp",I[0]));
     c.appendChild(txt("p","bridge",I[1]));
     c.appendChild(txt("p","small","Este módulo toma unos "+mins(i)+" minutos."));
@@ -2120,16 +2268,21 @@ function paneLee(p,i,adv){
     const r=el("div","inrv");r.appendChild(txt("strong",null,"En REVIVA"));r.appendChild(termify(txt("p",null,t[2])));c.appendChild(r);}));
   slides.push(c=>{c.appendChild(txt("div","q","REVIVA en cinco ideas"));const ul=el("ul","pts");m.lee.forEach(x=>ul.appendChild(termify(el("li",null,x))));c.appendChild(ul);});
   slides.push(c=>{c.appendChild(txt("p","count","Para llevarte de este módulo"));c.appendChild(txt("div","q","Un truco para acordarte"));c.appendChild(txt("p","bigp",I[2]));c.appendChild(txt("p","small","Lo que sigue son las tarjetas: ahí respondes sin mirar."));});
-  let k=0;
+  let k=0,dir=0;
   const show=()=>{p.innerHTML="";stopSpeak();ctx=null;
     const c=el("div","stack");slides[k](c);p.appendChild(c);
+    if(dir)mo(c,{opacity:[0,1],x:[dir*26,0]},{duration:.28,ease:"easeOut"});else sube(c.children);
+    armarDibujo(c.querySelector(".fig"));
+    {const rv=c.querySelector(".inrv");if(rv)mo(rv,{opacity:[0,1],x:[-18,0]},Object.assign({delay:.18},SUAVE));}
+    if(k===slides.length-1)mo(c.querySelector(".bigp"),{scale:[.92,1],opacity:[0,1]},Object.assign({delay:.1},SUAVE));
     const dots=el("div","dots");dots.setAttribute("aria-label","Pantalla "+(k+1)+" de "+slides.length);slides.forEach((x,j)=>dots.appendChild(el("i",j===k?"on":j<k?"past":"")));
-    const next=()=>{if(k<slides.length-1){k++;show();}else{stopSpeak();st(i).lee=1;adv();}};
-    const back=()=>{if(k>0){k--;show();}};
+    const next=()=>{if(k<slides.length-1){k++;dir=1;show();}else{stopSpeak();st(i).lee=1;adv();}};
+    const back=()=>{if(k>0){k--;dir=-1;show();}};
     const row=el("div","row");const nb=txt("button","btn primary","Continuar");nb.type="button";nb.onclick=next;row.appendChild(nb);
     if(k>0){const bb=txt("button","btn ghost","Volver");bb.type="button";bb.onclick=back;row.appendChild(bb);}
     if(canSpeak())row.appendChild(speakBtn(()=>Array.from(c.children).filter(x=>!x.matches(".fig,.recap,.count,.small")).map(x=>x.innerText).join(". ")));
     row.appendChild(dots);p.appendChild(row);
+    mo(dots.querySelector(".on"),{scaleX:[.4,1]},{duration:.25,ease:"easeOut"});
     p.appendChild(txt("p","kbd","Pantalla "+(k+1)+" de "+slides.length+". También puedes avanzar con las flechas del teclado."));
     keys={ArrowRight:next,ArrowLeft:back};};
   show();
@@ -2138,7 +2291,7 @@ function paneCards(p,i,adv){
   const all=allCards(i),s=st(i);let q=all.filter(c=>!s.cards[c.k]);if(!q.length)q=all.slice();
   const total=all.length;let prev=null;
   const show=()=>{p.innerHTML="";keys={};ctx=null;
-    if(!q.length){p.appendChild(txt("h3",null,"Tarjetas completas"));p.appendChild(txt("p",null,"Respondiste bien las "+total+" tarjetas de este módulo."));const b=txt("button","btn primary","Continuar");b.onclick=adv;p.appendChild(el("div","row")).appendChild(b);return;}
+    if(!q.length){p.appendChild(txt("h3",null,"Tarjetas completas"));p.appendChild(txt("p",null,"Respondiste bien las "+total+" tarjetas de este módulo."));const b=txt("button","btn primary","Continuar");b.onclick=adv;p.appendChild(el("div","row")).appendChild(b);sube(p.children);return;}
     const c=q[0];ctx={q:c.q,a:c.a};
     const known=all.filter(x=>s.cards[x.k]).length;
     p.appendChild(txt("p","count","Tarjeta "+Math.min(total,known+1)+" de "+total+". Responde en voz alta antes de mirar."));
@@ -2146,14 +2299,14 @@ function paneCards(p,i,adv){
     const a=txt("div","a hide",c.a);p.appendChild(a);
     const row=el("div","row");const b=txt("button","btn primary","Mostrar respuesta");
     const rate=v=>{prev={q:q.slice(),k:c.k,had:s.cards[c.k]};q.shift();if(v){s.cards[c.k]=1;}else q.push(c);save();show();};
-    const reveal=()=>{a.classList.remove("hide");termify(a);row.innerHTML="";
+    const reveal=()=>{a.classList.remove("hide");termify(a);mo(a,{opacity:[0,1],y:[-8,0]},{duration:.24,ease:"easeOut"});row.innerHTML="";
       const y=txt("button","btn good","La sabía"),n=txt("button","btn bad","No la sabía, repetir");y.onclick=()=>rate(1);n.onclick=()=>rate(0);row.appendChild(y);row.appendChild(n);
-      keys={"1":()=>rate(1),"2":()=>rate(0)};hint.textContent="Atajos del teclado: 1 la sabía, 2 repetir.";};
+      keys={"1":()=>rate(1),"2":()=>rate(0)};hint.textContent="Atajos del teclado: 1 la sabía, 2 repetir.";mo(row,{opacity:[0,1],y:[6,0]},{duration:.2,delay:.08});};
     b.onclick=reveal;row.appendChild(b);
     if(prev){const u=txt("button","btn ghost","Deshacer la última");u.onclick=()=>{q=prev.q;if(!prev.had)delete s.cards[prev.k];prev=null;save();show();};row.appendChild(u);}
     p.appendChild(row);
     const hint=txt("p","kbd","Atajo del teclado: Espacio muestra la respuesta.");p.appendChild(hint);
-    keys={" ":reveal};};
+    keys={" ":reveal};entra(p.children,18);};
   show();
 }
 function parseNum(x){x=String(x).replace(/[^\d.,-]/g,"");if(!x)return NaN;
@@ -2181,12 +2334,14 @@ function paneCif(p,i,adv){
       if(!ok)fb.appendChild(txt("p","small","Va a volver a salir al final de esta ronda."));
       go.remove();idk.remove();inp.disabled=true;
       const nx=txt("button","btn primary","Continuar");nx.type="button";nx.onclick=()=>{q.shift();if(ok){s.cif[j]=1;save();}else q.push(j);show();};
-      fb.appendChild(el("div","row")).appendChild(nx);nx.focus();};
+      fb.appendChild(el("div","row")).appendChild(nx);nx.focus();
+      if(ok)mo(fb.firstChild,{scale:[.7,1]},POP);else if(inp.value.trim())mo(inp,{x:[0,-7,7,-5,5,0]},{duration:.36});
+      sube([...fb.children].slice(1),{delay:stg(.05,{startDelay:.08})});};
     idk.onclick=()=>done(false);
     f.onsubmit=e=>{e.preventDefault();const v=parseNum(inp.value);
       if(isNaN(v)){fb.innerHTML="";fb.appendChild(txt("p","no","Falta el número. Escríbelo sin letras ni símbolos, por ejemplo "+fm(dec?12.5:120,dec?1:0)+"."));inp.focus();return;}
       done(Math.abs(v-c[2])<=Math.max(Math.abs(c[2])*0.015,0.051));};
-    p.appendChild(f);};
+    p.appendChild(f);entra(f.children,18);};
   show();
 }
 function paneCalc(p,i,adv){
@@ -2203,9 +2358,10 @@ function paneCalc(p,i,adv){
   const b=txt("button","btn","Mostrar pasos");b.type="button";
   const ok=txt("button","btn primary hide","Continuar");ok.type="button";ok.onclick=()=>{st(i).calc=1;adv();};
   const r=txt("button","btn ghost","Volver a los datos de REVIVA");r.type="button";r.onclick=()=>{ins.forEach((x,k)=>x.value=c.i[k][1]);upd();};
-  b.onclick=()=>{out.classList.remove("hide");ok.classList.remove("hide");b.classList.add("hide");upd();};
+  b.onclick=()=>{out.classList.remove("hide");ok.classList.remove("hide");b.classList.add("hide");upd();sube(out.children,{delay:stg(.06)});};
   ins.forEach(x=>x.addEventListener("input",upd));
   row.appendChild(b);row.appendChild(ok);row.appendChild(r);p.appendChild(row);p.appendChild(out);
+  sube(p.children);
 }
 const NAMES=["Pablo","Camilo","Marianne"];let tmr=null;
 function askCom(p,c,secs,onRate,meta){
@@ -2217,9 +2373,10 @@ function askCom(p,c,secs,onRate,meta){
   const a=txt("div","a hide",c[1]);p.appendChild(a);
   const row=el("div","row"),go=txt("button","btn primary","Partir cronómetro"),sh=txt("button","btn","Ver pauta");let left=secs;
   go.onclick=()=>{go.disabled=true;clearInterval(tmr);tmr=setInterval(()=>{left--;t.firstChild.style.width=Math.max(0,100*left/secs)+"%";tl.textContent=left>0?left+" s":"Tiempo. Cierra la idea.";if(left<=0)clearInterval(tmr);},1000);};
-  sh.onclick=()=>{clearInterval(tmr);a.classList.remove("hide");termify(a);row.innerHTML="";
+  sh.onclick=()=>{clearInterval(tmr);a.classList.remove("hide");termify(a);mo(a,{opacity:[0,1],y:[-8,0]},{duration:.24,ease:"easeOut"});row.innerHTML="";
     [["Respuesta sólida","good",2],["Faltó una cifra o el porqué","warn",1],["Se cayó","bad",0]].forEach(([tx,k,v])=>{const x=txt("button","btn "+k,tx);x.onclick=()=>onRate(v);row.appendChild(x);});};
   row.appendChild(go);row.appendChild(sh);p.appendChild(row);
+  entra(p.children,18);
 }
 function paneCom(p,i,adv){
   const m=M[i],s=st(i);let j=m.com.findIndex((c,k)=>s.com[k]==null);if(j<0)j=0;
@@ -2247,7 +2404,8 @@ function helpBox(i){
   wrap.appendChild(el("div","row")).appendChild(tg);wrap.appendChild(box);
   let built=false;
   tg.onclick=()=>{const open=box.classList.toggle("hide")===false;tg.setAttribute("aria-expanded",open);tg.textContent=open?"Cerrar la ayuda":"¿No entiendes algo? Abrir la ayuda";
-    if(open&&!built){built=true;build();}};
+    if(open&&!built){built=true;build();}
+    if(open)mo(box,{opacity:[0,1],y:[-10,0]},{duration:.24,ease:"easeOut"});};
   function build(){
     box.appendChild(txt("h3",null,"Conceptos de este módulo"));
     const list=el("div");TEO[i].forEach(t=>{const d=el("details");d.appendChild(txt("summary",null,t[0]));d.appendChild(txt("p",null,t[1]));d.appendChild(txt("p","small","En REVIVA: "+t[2]));list.appendChild(d);});box.appendChild(list);
@@ -2365,11 +2523,13 @@ function route(){
   if(v==="inicio")renderInicio();
   if(v==="ensayo")ensayo();
   if(v==="conceptos")renderGloss();
+  if(v==="quiz")mo($("#v-quiz"),{opacity:[0,1]},{duration:.22});
+  else if(v!=="mod"&&v!=="inicio")sube($("#v-"+v).children,{delay:stg(.05)});
   prog();window.scrollTo(0,0);
 }
 $("#en-next").onclick=ensayo;$("#en-inf").onchange=ensayo;
 checks($("#chk-cruce"),CRUCE,"x");checks($("#chk-corr"),CORR,"c");checks($("#chk-red"),RED,"r");checks($("#chk-pauta"),PAUTA,"p");$("#gl-q").addEventListener("input",renderGloss);
-save();window.addEventListener("hashchange",route);route();
+aplicarMov();save();window.addEventListener("hashchange",route);route();
 </script>
 </body>
 </html>
