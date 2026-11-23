@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Guía de estudio para la defensa de REVIVA: 22 módulos en el orden del informe, 90 preguntas de comisión y el resumen completo del proyecto.">
+<meta name="description" content="Guía de estudio para la defensa de REVIVA: 22 módulos en el orden del informe, 95 preguntas de comisión y el resumen completo del proyecto.">
 <meta name="theme-color" content="#12223A">
 <title>REVIVA Sala de defensa</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -116,6 +116,17 @@ ul.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;
 ul.checks label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
 ul.checks input{margin-top:5px;accent-color:var(--good);width:16px;height:16px;flex:none}
 ul.checks input:checked+span{color:var(--muted);text-decoration:line-through}
+ul.fb{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+ul.fb label{display:flex;gap:12px;align-items:flex-start;padding:10px 6px;border-radius:8px;cursor:pointer}
+ul.fb label:hover{background:var(--sunk)}
+ul.fb input{width:20px;height:20px;margin-top:3px;flex:none;accent-color:var(--cell)}
+ul.fb .det{color:var(--muted);font-size:.95rem}
+ul.fb input:checked+span b{text-decoration:line-through;color:var(--muted)}
+#fb-list h4{font-family:var(--body);font-size:1rem;font-weight:700;margin:14px 0 2px;padding-top:12px;border-top:1px solid var(--line)}
+#fb-list h4:first-child{border-top:0;padding-top:0;margin-top:0}
+#fb-cuenta{font-weight:600}
+.est{display:inline-block;font-size:.8rem;font-weight:700;padding:1px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap;vertical-align:1px}
+.est-ok{color:var(--good)}.est-medias{color:var(--warn)}.est-falta{color:var(--bad)}.est-ver{color:var(--cell)}
 ul.checks .prop{font-weight:600;color:var(--cell)}
 ul.checks input:checked+span .prop{color:var(--muted)}
 .timeline{display:grid;grid-template-columns:auto 1fr;gap:6px 14px}
@@ -511,7 +522,7 @@ html.sin-mov #quiz-seccion .qz-confeti{display:none}
   <div class="cover">
     <figure class="fig" id="hero"></figure>
     <h1>Guía de estudio para la defensa de REVIVA</h1>
-    <p class="lead">22 módulos en el orden del informe, 90 preguntas de comisión y el resumen completo del proyecto, del problema al VAN.</p>
+    <p class="lead">22 módulos en el orden del informe, 95 preguntas de comisión y el resumen completo del proyecto, del problema al VAN.</p>
     <div class="row"><a class="btn primary lg" id="start" href="#m1">Iniciar el recorrido</a><a class="btn lg" href="#ruta">Ver la ruta completa</a></div>
     <p class="small" id="start-note"></p>
   </div>
@@ -521,7 +532,7 @@ html.sin-mov #quiz-seccion .qz-confeti{display:none}
   </div>
   <div class="box stack">
     <h3>Speed Quiz de la comisión</h3>
-    <p>90 preguntas al estilo de la comisión. Escribes tu respuesta, la página marca qué puntos clave dijiste y te vuelve a preguntar lo que más fallas.</p>
+    <p>95 preguntas al estilo de la comisión. Escribes tu respuesta, la página marca qué puntos clave dijiste y te vuelve a preguntar lo que más fallas.</p>
     <p class="small" id="qz-resumen"></p>
     <div class="row"><a class="btn" href="#quiz">Abrir el Speed Quiz</a></div>
   </div>
@@ -619,11 +630,16 @@ html.sin-mov #quiz-seccion .qz-confeti{display:none}
 
 <section class="view" id="v-informe">
   <h2>Informe final</h2>
-  <p class="lead">Al juntar los tres informes hay dos riesgos: dejar una corrección sin aplicar y que una misma cifra salga distinta en dos capítulos.</p>
+  <p class="lead">Al juntar los tres informes hay dos riesgos: dejar un comentario del profesor sin resolver y que una misma cifra salga distinta en dos capítulos.</p>
+  <div class="box stack"><h3>Comentarios del profesor, uno por uno</h3>
+    <p class="small">Cada comentario revisado contra el Informe 1 (v11), el Informe 2 (v24) y el Informe 3 (v2). Marquen la casilla cuando el grupo lo deje resuelto.</p>
+    <p id="fb-cuenta"></p>
+    <div class="row"><button class="btn" id="fb-filtro" type="button" aria-pressed="false">Ver solo lo que falta</button></div>
+    <div id="fb-list"></div></div>
   <div class="box stack"><h3>Cifras que hoy no calzan entre informes</h3>
     <p class="small">Encontradas al comparar el Informe 1 (v11), el Informe 2 (v24) y el Informe 3 (v2). Cada una trae una propuesta de cómo dejarla; la decisión es del grupo. Esta página ya usa siempre la versión más nueva.</p>
     <ul class="checks" id="chk-cruce"></ul></div>
-  <div class="box stack"><h3>Correcciones recibidas</h3><ul class="checks" id="chk-corr"></ul></div>
+  <div class="box stack"><h3>Lo que tiene que estar en la presentación final</h3><p class="small">Sale de los comentarios a las tres presentaciones. La estructura definitiva depende de la rúbrica.</p><ul class="checks" id="chk-ppt"></ul></div>
   <div class="box stack"><h3>Contenidos que pide la pauta del curso</h3><p class="small">Según la presentación de la primera clase. Revisen que cada uno esté en el documento final.</p><ul class="checks" id="chk-pauta"></ul></div>
   <div class="box stack"><h3>Redacción y formato</h3><ul class="checks" id="chk-red"></ul></div>
 </section>
@@ -910,7 +926,7 @@ const PREGUNTAS = [
  ojoCon:"Santiago no es el hub: es la bodega de stock, control y despacho."},
 {id:"o04",tema:"Operaciones y personas",tipo:"abierta",icono:"persona",
  pregunta:"¿Con cuánta gente parten?",
- respuestaModelo:"Con 15 personas: el CEO, dos gerentes, seis técnicos en Copiapó, dos instaladores, un encargado de calidad y bodega, y tres vendedores. Todo lo demás se externaliza.",
+ respuestaModelo:"Con 15 personas: el CEO, dos gerentes, seis técnicos en Copiapó, dos instaladores, un supervisor de calidad y bodega, y tres vendedores. Todo lo demás se externaliza.",
  puntosClave:[{texto:"15 personas el año 1",keywords:["15","quince"]},{texto:"Un CEO y dos gerentes",keywords:["gerente","ceo"]},{texto:"Seis técnicos y dos instaladores",keywords:["tecnico","instalador"]},{texto:"El resto se externaliza",keywords:["external"]}],
  ojoCon:"Desde el año 2 son 16: entra el cuarto vendedor."},
 {id:"o05",tema:"Operaciones y personas",tipo:"abierta",icono:"moneda",
@@ -977,7 +993,7 @@ const PREGUNTAS = [
  ojoCon:"Los números: VAN de $309,4 M puro y $326,3 M del inversionista."},
 {id:"f09",tema:"Finanzas",tipo:"abierta",icono:"lupa",
  pregunta:"¿Con qué tasa descontaron el flujo del inversionista?",
- respuestaModelo:"Con el WACC, 6,98%: el promedio entre lo que exigen los socios, 9,13%, y lo que cuesta el banco después de impuesto, 3,75%. [COMPLETAR: postura del grupo si preguntan por qué no se usó Ke]",
+ respuestaModelo:"Con el WACC, 6,98%: el promedio entre lo que exigen los socios, 9,13%, y lo que cuesta el banco después de impuesto, 3,75%. Se usa el WACC porque ese flujo ya incluye el crédito.",
  puntosClave:[{texto:"WACC de 6,98%",keywords:["wacc","6,98","6.98"]},{texto:"Ke de 9,13%",keywords:["ke","9,13","9.13"]},{texto:"Deuda a 3,75% después de impuesto",keywords:["3,75","3.75","kd"]},{texto:"Ponderado 60% socios y 40% banco",keywords:["60","40","ponder"]}],
  ojoCon:"Parte de la teoría descuenta este flujo con Ke. Con Ke el VAN sería cerca de $280,8 M: sigue positivo. Lleven la postura conversada."},
 {id:"f10",tema:"Finanzas",tipo:"abierta",icono:"cohete",
@@ -1194,7 +1210,36 @@ const PREGUNTAS = [
  pregunta:"¿Qué reinversión hay durante el proyecto?",
  opciones:["Una estación de electroluminiscencia en el año 3","Un segundo galpón en el año 2","Ninguna"],correcta:0,
  explicacion:"Cuesta $16,9 millones y se deprecia desde el año 4. El segundo furgón va en leasing, como gasto.",
- ojoCon:"El segundo furgón no es inversión: es un arriendo."}
+ ojoCon:"El segundo furgón no es inversión: es un arriendo."},
+{id:"i17",tema:"Idea de negocio",tipo:"abierta",icono:"ampolleta",
+ pregunta:"Explíquenme, en este orden: la oportunidad, la necesidad y el problema.",
+ pista:"Partan por lo que cambia en el entorno, sigan con lo que necesita cada actor y cierren con una palabra.",
+ respuestaModelo:"La oportunidad nace del entorno legal y ambiental: desde 2028 la Ley REP incluye los paneles. Eso deja dos necesidades mal satisfechas: las grandes empresas necesitan retirar sus paneles, y las pymes necesitan cambiar su sistema energético. Y el problema, para los dos, es el costo.",
+ puntosClave:[{texto:"Oportunidad: nace del entorno legal y ambiental (Ley REP desde 2028)",keywords:["ley rep","legal","macroentorno","entorno"]},{texto:"Necesidad de las grandes empresas: retirar sus paneles",keywords:["retir"]},{texto:"Necesidad de las pymes: cambiar su sistema energético",keywords:["sistema energetico","cambiar su energia","cambiar de energia"]},{texto:"Problema: el costo",keywords:["costo","caro","cara"]}],
+ ojoCon:"Es el orden que pidió el profesor por escrito. El informe lo trae como problema, necesidad y oportunidad: sepan contarlo en los dos órdenes."},
+{id:"m19",tema:"Marketing",tipo:"abierta",icono:"moneda",
+ pregunta:"Una pyme no tiene $4.000.000 a la mano. ¿Qué facilidades de pago le dan?",
+ pista:"Hay un dato de la encuesta, un socio y una forma de cobrar en dos partes.",
+ respuestaModelo:"El 88% de los encuestados prefiere pagar en cuotas o con un pago mensual. Por eso trabajamos con un socio financiero, para que la cuota se acerque al ahorro en la cuenta de luz. REVIVA cobra el 50% al firmar y el resto al mes siguiente, contra la instalación o el pago del socio financiero.",
+ puntosClave:[{texto:"El 88% prefiere cuotas o pago mensual",keywords:["88"]},{texto:"Pago en cuotas con un socio financiero",keywords:["socio financiero","financiera","cuotas"]},{texto:"La cuota se acerca al ahorro en la cuenta de luz",keywords:["ahorro"]},{texto:"REVIVA cobra 50% al firmar y el resto al mes siguiente",keywords:["50%","50 %","mitad","al firmar"]}],
+ ojoCon:"Falta definir quién es el socio financiero y en qué condiciones: [COMPLETAR]. El profesor pidió investigarlo."},
+{id:"o14",tema:"Operaciones y personas",tipo:"alternativas",icono:"persona",
+ pregunta:"¿Quién hace el control de recepción de los paneles en Santiago?",
+ opciones:["El supervisor de calidad y bodega","El gerente comercial","Un laboratorio externo"],correcta:0,
+ explicacion:"Hace el control de recepción de cada lote, revisa cada kit antes de salir y maneja el stock.",
+ ojoCon:"El profesor pidió llamarlo supervisor de calidad. El Informe 2 todavía dice «encargado»."},
+{id:"o15",tema:"Operaciones y personas",tipo:"abierta",icono:"persona",
+ pregunta:"El vendedor es clave en este negocio. ¿Cuánto gana y cómo lo incentivan?",
+ pista:"Una base, un porcentaje y la diferencia con los agentes externos.",
+ respuestaModelo:"Tiene una base de $1.000.000 más 3% de comisión sobre la venta neta. Los agentes externos no tienen sueldo fijo y ganan 5%. Partimos con tres ejecutivos propios, que cierran unas 10 ventas al mes en conjunto, y el segundo año entra el cuarto.",
+ puntosClave:[{texto:"Base de $1.000.000",keywords:["1.000.000","un millon","1 millon"]},{texto:"Comisión de 3% sobre la venta neta",keywords:["3%","3 %","tres por ciento"]},{texto:"Agentes externos: 5% y sin sueldo fijo",keywords:["5%","5 %","agente"]},{texto:"Tres ejecutivos que cierran unas 10 ventas al mes",keywords:["tres ejecutivos","3 ejecutivos","tres vendedores","3 vendedores","10 ventas","diez ventas"]}],
+ ojoCon:"Con unas 3 ventas al mes, la comisión suma cerca de $500.000 por vendedor. Es una estimación: 3% de un kit promedio de $5,1 millones netos. El profesor pidió dos veces revisar este sueldo."},
+{id:"f28",tema:"Finanzas",tipo:"abierta",icono:"balanza",
+ pregunta:"Hay autores que descuentan el flujo del inversionista con Ke. ¿Por qué ustedes usaron el WACC?",
+ pista:"Piensen en qué trae adentro ese flujo. Y tengan a mano qué pasa con el VAN si usan Ke.",
+ respuestaModelo:"Porque el flujo del inversionista ya incluye el crédito. Por eso se descuenta con una tasa que mezcla lo que exigen los socios, 9,13%, con lo que cuesta el banco, 3,75% después de impuesto: da 6,98%. Si se descuenta con Ke, el VAN es cerca de $280,8 millones: el proyecto sigue siendo rentable.",
+ puntosClave:[{texto:"El flujo del inversionista ya incluye el crédito",keywords:["incluye el credito","incluye la deuda","incluye el prestamo"]},{texto:"La tasa mezcla lo que exigen los socios y lo que cuesta el banco",keywords:["mezcla","promedio","ponder"]},{texto:"WACC de 6,98%",keywords:["6,98","6.98"]},{texto:"Con Ke el VAN sigue positivo: cerca de $280,8 M",keywords:["280","sigue positivo","sigue siendo rentable"]}],
+ ojoCon:"Los $280,8 millones son un cálculo hecho con el flujo del Informe 3: no está escrito en el informe. Con Ke, el VAN del inversionista queda bajo el del flujo puro, justo lo contrario de lo que pidió el profesor."}
 ];
 
 
@@ -2088,7 +2133,7 @@ const M=[
 
 {inf:2,t:"Las personas: plan de recursos humanos",s:"Plan de RRHH",
  lee:["Estructura <b>vertical y liviana</b>: un CEO y dos gerentes.","<b>15 personas</b> el año 1 y 16 desde el año 2. Lo que no es parte del núcleo se externaliza.","El <b>CEO gana más que los gerentes</b> y el vendedor tiene una base de $1.000.000 más comisión.","La política se ordena en tres verbos: <b>atraer, desarrollar y mantener</b>.","El capital humano técnico es escaso y es un factor crítico de éxito."],
- cards:[["¿Cuánta gente trabaja en REVIVA?","15 personas el año 1 y 16 desde el año 2: CEO, 2 gerentes, 6 técnicos en Copiapó, 2 instaladores SEC, 1 encargado de calidad y bodega, y 3 ejecutivos de venta (4 desde el año 2)."],
+ cards:[["¿Cuánta gente trabaja en REVIVA?","15 personas el año 1 y 16 desde el año 2: CEO, 2 gerentes, 6 técnicos en Copiapó, 2 instaladores SEC, 1 supervisor de calidad y bodega, y 3 ejecutivos de venta (4 desde el año 2)."],
  ["¿Cuáles son los sueldos brutos?","CEO $4.000.000; gerentes $3.000.000; técnicos e instaladores $1.000.000; ejecutivo de venta $1.000.000 base + 3% de comisión."],
  ["¿Qué se externaliza?","Contabilidad, remuneraciones, prevención de riesgos, marketing digital, fletes y parte de la instalación. Unos $16 M al año en servicios externos."],
  ["¿Cuál es la política de RRHH?","Tres verbos: atraer (selección por competencias), desarrollar (inducción, curso SEC y experto internacional) y mantener (sueldos de mercado, bonos y comisiones)."],
@@ -2326,7 +2371,7 @@ const FIG=[
 /*11*/()=>{const d=[[97,"$3,0 M"],[85,"$3,5 M"],[76,"$4,0 M"],[61,"$4,5 M"]];let o=tx(260,24,"¿Comprarías el kit a este precio?","b");d.forEach((x,k)=>{const h=x[0]*1.4,X=70+k*105;o+=rc(X,196-h,70,h,k===2?"f-sun":"f-sunk",4)+tx(X+35,190-h,x[0]+"%","t")+tx(X+35,216,x[1],k===2?"t":"s");});return sv(o+ln(50,196,480,196)+tx(315,236,"$4,0 M es el precio que más ingreso deja","s"),"Escalera de precios: 97% compraría a 3 millones, 85% a 3,5 millones, 76% a 4 millones y 61% a 4,5 millones");},
 /*12*/()=>sv(ln(70,200,490,200)+ln(70,200,70,30)+tx(280,228,"Inversión que pide: de baja a alta","s")+tx(78,18,"Confianza: sube hacia arriba","s","start")+ci(170,160,10,"f-sunk")+tx(170,186,"Usados informales","s")+ci(410,70,10,"f-cell")+tx(410,96,"Sistemas nuevos","s")+ci(150,76,29,"f-sun")+tx(150,81,"REVIVA","to")+tx(188,72,"Inversión baja","t","start")+tx(188,90,"y confianza alta","t","start"),"Mapa de posicionamiento: REVIVA ocupa el espacio de inversión baja y confianza alta, entre los usados informales y los sistemas nuevos"),
 /*13*/()=>sv('<polygon points="20,14 500,14 440,78 80,78" class="f-sunk"/><polygon points="84,84 436,84 376,148 144,148" class="f-cell"/><polygon points="148,154 372,154 322,218 198,218" class="f-sun"/>'+tx(260,42,"TAM: 298.929 pymes","t")+tx(260,60,"18 millones de m² de paneles","s")+tx(260,112,"SAM: 41.500 pymes","tw")+tx(260,130,"2,5 millones de m²","sw")+tx(260,182,"SOM: 130 pymes","to")+tx(260,200,"7.800 m² el año 1","so"),"Embudo de mercado: TAM de 298.929 pymes, SAM de 41.500 y SOM de 130 pymes el primer año"),
-/*14*/()=>sv(bx(190,8,140,44,"f-sun","CEO",null,"to")+ln(260,52,260,68)+ln(130,68,390,68)+ln(130,68,130,82)+ln(390,68,390,82)+bx(30,82,200,48,"f-cell","Gerente Comercial","y Marketing","tw")+bx(290,82,200,48,"f-cell","Gerente de Operaciones","y Calidad","tw")+rc(10,150,500,80,"f-sunk")+tx(260,170,"El equipo: 12 personas más","t")+bx(20,180,116,40,"f-surf","3 vendedores")+bx(142,180,116,40,"f-surf","6 técnicos")+bx(264,180,116,40,"f-surf","2 instaladores")+bx(386,180,116,40,"f-surf","1 de calidad"),"Equipo de REVIVA: un CEO, dos gerentes y doce personas más: tres vendedores, seis técnicos, dos instaladores y un encargado de calidad y bodega"),
+/*14*/()=>sv(bx(190,8,140,44,"f-sun","CEO",null,"to")+ln(260,52,260,68)+ln(130,68,390,68)+ln(130,68,130,82)+ln(390,68,390,82)+bx(30,82,200,48,"f-cell","Gerente Comercial","y Marketing","tw")+bx(290,82,200,48,"f-cell","Gerente de Operaciones","y Calidad","tw")+rc(10,150,500,80,"f-sunk")+tx(260,170,"El equipo: 12 personas más","t")+bx(20,180,116,40,"f-surf","3 vendedores")+bx(142,180,116,40,"f-surf","6 técnicos")+bx(264,180,116,40,"f-surf","2 instaladores")+bx(386,180,116,40,"f-surf","1 de calidad"),"Equipo de REVIVA: un CEO, dos gerentes y doce personas más: tres vendedores, seis técnicos, dos instaladores y un supervisor de calidad y bodega"),
 /*15*/()=>{const p=[[70,"Copiapó","Certificación","completa"],[220,"Santiago","Control de","recepción"],[330,"Santiago","Revisión","del kit"],[460,"Cliente","Verificación","en terreno"]];let o=ln(70,110,460,110,"ln2")+tx(260,26,"Cuatro controles de calidad","b");p.forEach((x,k)=>{o+=ci(x[0],110,20,"f-cell")+tx(x[0],116,k+1,"tw b")+tx(x[0],74,x[1],"t")+tx(x[0],156,x[2],"s")+tx(x[0],172,x[3],"s");});return sv(o+tx(145,100,"800 km","s"),"Los cuatro controles de calidad: certificación completa en Copiapó, control de recepción y revisión del kit en Santiago, y verificación en el local del cliente");},
 /*16*/()=>{const d=[[90.83,"f-cell","Activos fijos: $90,8 M"],[19.29,"f-good","Intangibles: $19,3 M"],[3.49,"f-ink","Garantías de arriendo: $3,5 M"],[161.94,"f-sun","Capital de trabajo: $161,9 M (59%)"]];let o=tx(260,26,"Inversión inicial: $275,6 M","b"),x=30;d.forEach((v,k)=>{const w=v[0]/275.56*460;o+=rc(x,46,w,54,v[1],0);x+=w;o+=rc(40,124+k*28,14,14,v[1],3)+tx(64,136+k*28,v[2],"t","start");});return sv(o,"Inversión inicial de 275,6 millones: activos fijos 90,8; intangibles 19,3; garantías 3,5 y capital de trabajo 161,9 millones");},
 /*17*/()=>{const v=[-13,-29.2,-45.4,-74.9,-109.4,-145.8,-158.4,-161.9,-156.9,-147.2,-135.2,-112.4],c=lineChart(v,50,480,50,190,-161.9,0);let o=tx(260,24,"Saldo de caja acumulado, año 1","b")+ln(50,50,480,50)+tx(40,54,"0","s","end")+c.path;"EFMAMJJASOND".split("").forEach((m,k)=>o+=tx(c.X(k),214,m,"s"));
@@ -2712,6 +2757,7 @@ function helpBox(i){
 /* ---------- resumen del proyecto ---------- */
 const RES=[
 ["Idea de negocio","#m1",[
+ ["Orden para presentarlo","Oportunidad, necesidad y problema: así lo pidió el profesor por escrito. El informe lo trae como problema, necesidad y oportunidad."],
  ["Problema","El costo. A la pyme le sale caro pasarse a energía solar, y a la gran empresa le cuesta deshacerse de paneles que todavía funcionan."],
  ["Cuantificación del problema","Como máximo el 1,5% de las pymes tiene paneles. La luz subió 30–60% desde 2023. Habrá 284.906 toneladas de paneles en desuso a 2052."],
  ["Necesidad de las grandes empresas","Retirar sus paneles y demostrar qué hicieron con ellos: plan de cierre, Ley REP desde mayo de 2028, reputación y financiamiento verde."],
@@ -2752,6 +2798,7 @@ const RES=[
  ["Posicionamiento","Por precio: la alternativa solar de menor precio para pymes, siempre junto al certificado y la garantía."],
  ["Producto","Kit Esencial (5 kWp), Kit Pyme (10 kWp) y Kit Pro (15 kWp), con inversor nuevo, instalación, trámite SEC y certificado."],
  ["Precio","$4.000.000, $6.500.000 y $9.000.000 con IVA. Estrategia de penetración: dos tercios de un sistema nuevo."],
+ ["Forma de pago","El 88% prefiere cuotas o pago mensual. Se ofrece con un socio financiero, por definir. REVIVA cobra 50% al firmar y el resto al mes siguiente."],
  ["Plaza","Venta directa: un vendedor visita la pyme. Agentes a comisión amplían la cobertura."],
  ["Promoción","Evaluación de ahorro gratuita, Google Ads, redes sociales y casos reales."],
  ["Personas, procesos y evidencia física","Instaladores SEC, cuatro controles de calidad y un certificado con QR por panel."],
@@ -2763,7 +2810,7 @@ const RES=[
  ["Presupuesto de marketing","$23,3 M el año 1, el 3,5% de las ventas."]]],
 ["Personas y operaciones","#m14",[
  ["Dotación","15 personas el año 1 y 16 desde el año 2."],
- ["Cargos","CEO, 2 gerentes, 6 técnicos, 2 instaladores, 1 encargado de calidad y bodega y 3 vendedores (4 desde el año 2)."],
+ ["Cargos","CEO, 2 gerentes, 6 técnicos, 2 instaladores, 1 supervisor de calidad y bodega y 3 vendedores (4 desde el año 2)."],
  ["Sueldos brutos","CEO $4.000.000; gerentes $3.000.000; técnicos e instaladores $1.000.000; vendedor $1.000.000 más 3% de comisión."],
  ["Política de personas","Atraer, desarrollar y mantener."],
  ["Externalización","Contabilidad, remuneraciones, prevención de riesgos, marketing digital, fletes y parte de la instalación."],
@@ -2837,6 +2884,8 @@ const CRUCE=[
 ["Dentro del Informe 2: la segmentación parte en $150.000, pero la síntesis del mercado objetivo dice «$300.000 a $1.000.000».","Propuesta: corregir la síntesis a $150.000. Es la contradicción más fácil de pillar."],
 ["Satisfacción de clientes: «sobre 80%» en el Informe 1 y 85% en el Informe 2.","Propuesta: meta de 85%, que cumple el piso de 80% pedido para el BSC. Usar 85% en ambos."],
 ["Dónde se parte: el Informe 1 y el Informe 2 dicen Santiago ~80% de las ventas y norte ~20%; el grupo también ha planteado partir por el norte.","Por decidir en grupo: que la respuesta oral diga lo mismo que el documento."],
+["Pago en cuotas: la solución del Informe 1 y la estrategia de precio del Informe 2 lo ofrecen desde el inicio; Ansoff (informes 1 y 2) y el pronóstico del Informe 3 lo ponen como producto nuevo del año 3.","Propuesta: separar las dos cosas. Cuotas con el socio financiero desde el año 1, y el «pago mensual» como producto nuevo del año 3. Y nombrar al socio financiero."],
+["Cargo de calidad: «Encargado de calidad y bodega» en el Informe 2; el profesor pidió «supervisor de calidad».","Propuesta: cambiarlo en la Tabla 9, el organigrama y los perfiles de cargo."],
 ["Diversificación en Ansoff: Latinoamérica u otros equipos en el Informe 1; sistemas con baterías en el Informe 2.","Propuesta: dejar la del Informe 2 (baterías), que es más nueva y más concreta."],
 ["Desarrollo de producto: el Informe 1 incluye reacondicionar inversores; el Informe 2 no.","Propuesta: sacarlo, salvo que el grupo quiera defenderlo."],
 ["Financiamiento: el Informe 1 dice «postular a CORFO» en dos partes; el Informe 3 no considera fondos concursables.","Propuesta: en el Informe 1, cambiar a «crédito con garantía FOGAPE y aporte de socios»."],
@@ -2846,25 +2895,69 @@ const CRUCE=[
 ["Etiquetas QR: están en el presupuesto de marketing del Informe 2 y como costo variable en el Informe 3.","Propuesta: dejarlas solo como costo variable."],
 ["Otros ingresos: el Informe 2 da $98,8 M el año 1; el Informe 3 los recalcula (hasta 7% menos).","Propuesta: usar las cifras del Informe 3."],
 ["Inversión de operaciones: $95,6 M en el Informe 2 frente al detalle por tipo de activo del Informe 3.","Propuesta: dejar solo la tabla del Informe 3, con los imprevistos en intangibles."]];
-const CORR=[
-"Cap. I en orden: problema y su cuantificación → necesidad (grandes empresas y pymes) → oportunidad.",
-"Estrategia genérica: liderazgo o eficiencia en costos, no diferenciación.",
-"Porter: la industria es la venta de paneles solares (se compite con paneles nuevos).",
-"PESTEL: macroentorno separado de los datos de la industria.",
-"4 factores críticos de éxito: acreditación, tecnología y calidad, confianza, recursos financieros y capital humano técnico.",
-"BSC con metas financieras concretas y satisfacción de clientes sobre 80%.",
-"Objetivos de marketing: conocimiento, imagen, posicionamiento y satisfacción, uno por objetivo.",
-"Participación de mercado medida sobre la venta.",
-"Posicionamiento por precio.",
-"TAM, SAM y SOM en m² de paneles.",
-"Sueldos: el CEO gana más que los gerentes y el vendedor tiene base más alta.",
-"Hogares fuera del segmento: solo pymes.",
-"Solo 3 objetivos financieros.",
-"Inversión inicial por tipo de activo, con todos los imprevistos en intangibles.",
-"Crédito sin 2 años de gracia y con bancos reales.",
-"Flujo del inversionista creciente; depreciación y valor de desecho revisados.",
-"Tasa justificada con CAPM y WACC; VAN y TIR del inversionista mayores que los del flujo puro.",
-"Flujos en formato simple: ingresos, costos, depreciación, UAI, impuesto, utilidad neta, ajustes, inversión, capital de trabajo, flujo, descontado y acumulado."];
+const FEED=[
+["Informe 1: comentarios escritos",[
+ ["Respetar el orden: oportunidad, necesidad y problema.","ver","El contenido está, pero el Informe 1 va en el orden problema (§1), necesidad (§2.1 y 2.2) y oportunidad (§2.3). El comentario escrito pide oportunidad, necesidad y problema. Confirmen cuál manda para el documento. En la defensa, cuéntenlo en el orden del comentario."],
+ ["La oportunidad nace del macroentorno: elegir el factor más relevante.","ok","§2.3 la ancla al factor legal y ambiental: la Ley REP incluye los paneles desde 2028."],
+ ["Necesidad de las grandes empresas (retiro de paneles) y de las pymes (cambio de sistema energético).","ok","§2.1 y §2.2, con esos mismos nombres."],
+ ["El problema es el costo.","ok","Cap. I, §1: «El problema es el costo, para los dos actores»."],
+ ["Canvas: definir bien el cliente (empresas, no personas). ¿Qué es una empresa pequeña y cuántas hay?","ok","§5.1: pequeñas, con ventas de 2.400 a 25.000 UF (260.575 empresas), y medianas, de 25.000 a 100.000 UF (38.354). Ojo: ese mismo párrafo todavía dice cuentas de luz de $300.000 a $1.000.000."],
+ ["Propuesta de valor por precio y conveniencia. No es un eslogan.","ok","§5.2: «precio y conveniencia» para pymes y «conveniencia en el retiro» para generadoras."],
+ ["PESTEL del macroentorno (crecimiento, inflación, tipo de cambio, cesantía), no de la industria. Concluir si es favorable.","ok","§1.2 trae PIB, inflación, dólar y desocupación. §1.7 concluye que el macroentorno es favorable."],
+ ["Porter: decir qué industria se analiza (paneles solares) y analizar la industria, no el negocio.","ok","§2 define la industria según el grupo objetivo y deja lo de REVIVA para §2.6."],
+ ["Misión: grupo objetivo, lo que venden, calidad, innovación y equipo comprometido.","ok","§7.1 nombra las cinco cosas."],
+ ["Estrategia genérica: liderazgo en costos.","ok","§10.2, con el desafío de igualar el valor a menor precio."],
+ ["La ventaja competitiva es diferenciación o eficiencia en costos, según la estrategia.","ok","§9: eficiencia en costos. Ojo: la sostiene en un «laboratorio móvil» que no está en los informes 2 y 3."],
+ ["El BSC se arma desde los objetivos estratégicos, la propuesta de valor, la estrategia y la ventaja.","medias","§11 lo declara y tiene metas concretas, pero las metas quedaron viejas: 180 clientes al año 3, 280 kits al año 5 y resultado positivo desde el año 3. Hoy son 250, 350 y año 2."]]],
+["Informe 2: comentarios escritos",[
+ ["Objetivos más de marketing y menos de venta: darse a conocer, imagen, posicionamiento y satisfacción.","ok","Tabla 1: los cuatro primeros objetivos son de marketing. Ventas, participación y crecimiento van después."],
+ ["Imagen de marca: son dos objetivos en uno, no es específico.","medias","Ahora es un solo objetivo: que el 70% de los clientes asocie la marca con «confiable y certificada». El atributo sigue siendo doble. Para cerrar el punto, dejen un solo atributo."],
+ ["La participación de mercado es sobre la venta, no sobre la cobertura de clientes.","ok","Nota de la Tabla 1: sistemas vendidos por REVIVA dividido por sistemas vendidos a empresas (inscripciones SEC)."],
+ ["Estrategia de posicionamiento por precio.","ok","§1.5, con declaración y mapa de posicionamiento."],
+ ["TAM, SAM y SOM en m² de paneles: convertir MWp a m² y relacionarlo con las pymes.","ok","§1.7: 18 millones de m², 2,5 millones de m² y 7.800 m², con la conversión explicada."],
+ ["Diferenciar los sueldos: el CEO tiene que ganar más que los gerentes.","ok","Tabla 9: CEO $4.000.000 y gerentes $3.000.000."],
+ ["Aumentar el sueldo del vendedor.","ver","Hoy: base de $1.000.000 más 3% de comisión. No tengo la versión anterior para comparar. La base es igual a la del técnico y menor que la del cargo de calidad ($1.100.000). Con unas 3 ventas al mes, la comisión suma cerca de $500.000 (estimación con cifras del informe). Conviene escribir el ingreso total esperado."]]],
+["Presentación de marketing, personas y operaciones",[
+ ["Estructurar la estrategia de mercado: introducción e hipótesis.","ok","El Informe 2 tiene Introducción y §1.3.3 Hipótesis de investigación (H0 y H1)."],
+ ["Investigar las facilidades de pago y revisar el modelo de negocio.","medias","El 88% prefiere cuotas y el informe habla de un «socio financiero», pero no dice quién es ni en qué condiciones. Además, la solución y la estrategia de precio lo dan desde el inicio, y Ansoff y el pronóstico lo ponen como producto nuevo del año 3."],
+ ["Mostrar organigrama, plan de RRHH, plan de marketing y las 7P.","medias","En el informe están: Figura 5, capítulo 2, capítulo 1 y §1.6. Falta llevarlos a la presentación final."],
+ ["Cambiar «encargado» por «supervisor de calidad».","falta","El Informe 2 sigue diciendo «Encargado de calidad y bodega» en la Tabla 9, en el texto del organigrama y en los perfiles de cargo. Esta página ya dice supervisor."],
+ ["Confirmar si el otro 70% de los $60 millones de operaciones es costo de venta.","ver","No encuentro esos $60 millones ni ese 70% en las versiones actuales. Hoy el Informe 3 separa costos variables ($477,2 M el año 1), costos fijos de operación ($179,3 M) y gastos de administración y ventas. Díganme a qué lámina se refería."],
+ ["Subir el presupuesto de marketing, con foco en los vendedores.","ver","Hoy son $23,3 M el año 1 (3,5% de las ventas) y bajan a $14,5 M el año 5 (0,8%), mientras las ventas casi se triplican. Las comisiones ($26,7 M el año 1) están en RRHH. No tengo la versión anterior para saber si subió."]]],
+["Presentación del plan financiero",[
+ ["Solo tres objetivos.","ok","Informe 3, Tabla 1: rentabilidad, equilibrio y recuperación."],
+ ["Especificar la inversión inicial (maquinaria y lo demás).","ok","Informe 3, Tabla 6: detalle por tipo de activo, con los imprevistos en intangibles."],
+ ["Cambiar las condiciones del préstamo: dos años de gracia no tiene sentido. ¿Qué bancos?","ok","Sin gracia, UF + 5,0% a 5 años, a cotizar en BancoEstado, Santander y BCI."],
+ ["Mejorar el flujo del inversionista: variaba y no aumentaba. Revisar depreciación y valor de desecho.","ok","El flujo ahora crece todos los años: −71,2; 8,6; 105,3; 182,2 y 456,0 millones. Depreciación acelerada y valor de desecho comercial de $29,1 M."],
+ ["Mejorar la tasa de descuento con CAPM y WACC. El VAN y la TIR del inversionista tienen que ser mayores.","ok","VAN $326,3 M y TIR 32,8%, sobre $309,4 M y 26,7% del flujo puro. Ojo: eso depende de descontar con WACC. Con Ke (9,13%) el VAN del inversionista da cerca de $280,8 M, menor que el puro."],
+ ["Cambiar el diseño de la presentación: menos información.","ver","No tengo la presentación. Queda como regla para la presentación final: un mensaje por lámina."]]]
+];
+const FEED_EST={ok:"Cumplido",medias:"A medias",falta:"Pendiente",ver:"Por confirmar"};
+let feedSolo=false;
+function renderFeed(){
+  const host=$("#fb-list");host.innerHTML="";const n={ok:0,medias:0,falta:0,ver:0};
+  FEED.forEach(g=>g[1].forEach(x=>n[x[1]]++));
+  $("#fb-cuenta").textContent=n.ok+" cumplidos, "+n.medias+" a medias, "+n.falta+" pendiente y "+n.ver+" por confirmar.";
+  const fb=$("#fb-filtro");fb.textContent=feedSolo?"Ver todos los comentarios":"Ver solo lo que falta";fb.setAttribute("aria-pressed",feedSolo);
+  FEED.forEach((g,gi)=>{const its=g[1].map((x,i)=>[x,i]).filter(([x])=>!feedSolo||x[1]!=="ok");if(!its.length)return;
+    host.appendChild(txt("h4",null,g[0]));const ul=el("ul","fb");
+    its.forEach(([x,i])=>{const k="fb"+gi+"_"+i,li=el("li"),l=el("label"),c=el("input");c.type="checkbox";c.id=k;c.checked=!!S.chk[k];
+      c.onchange=()=>{S.chk[k]=c.checked;save();};l.appendChild(c);
+      const sp=el("span");sp.appendChild(txt("b",null,x[0]));sp.appendChild(document.createTextNode(" "));sp.appendChild(txt("span","est est-"+x[1],FEED_EST[x[1]]));sp.appendChild(el("br"));sp.appendChild(txt("span","det",x[2]));
+      l.appendChild(sp);li.appendChild(l);ul.appendChild(li);});
+    host.appendChild(ul);});
+}
+const PPT=[
+"Las 7P del marketing mix, una por una.",
+"Organigrama con el cargo de supervisor de calidad.",
+"Plan de recursos humanos: dotación, sueldos y política de personas.",
+"Plan de marketing: objetivos, segmento, posicionamiento por precio y presupuesto.",
+"Oportunidad, necesidad y problema, en ese orden.",
+"Tres objetivos financieros, no más.",
+"Inversión inicial por tipo de activo.",
+"Crédito sin gracia y con los bancos nombrados.",
+"Flujo puro y flujo del inversionista, con VAN y TIR de cada uno.",
+"Poca información por lámina: un mensaje en cada una."];
 const PAUTA=[
 "Plan de marketing con Matriz de Ansoff.",
 "Estrategia de posicionamiento como sección formal, con declaración o mapa.",
@@ -2876,6 +2969,7 @@ const PAUTA=[
 "Documento sin errores ortográficos y con formato de tesis."];
 const RED=[
 "Ninguna mención a «la clase», «el curso», «el ramo» ni «el profesor» dentro del texto (la portada sí lleva el nombre del profesor).",
+"Borrar «revisada en clase»: aparece dos veces en los anexos del Informe 1 (Anexo 1, Porter, y la matriz de factores externos).",
 "Las referencias a «Informe 1», «Informe 2» y «Fase 3» pasan a ser capítulos y secciones del documento único.",
 "Montos en pesos completos con punto de miles; «$275,6 M» solo en gráficos.",
 "Cada número con su fuente o declarado como supuesto.",
@@ -2906,7 +3000,7 @@ function route(){
   prog();window.scrollTo(0,0);
 }
 $("#en-next").onclick=ensayo;$("#en-inf").onchange=ensayo;
-checks($("#chk-cruce"),CRUCE,"y");checks($("#chk-corr"),CORR,"c");checks($("#chk-red"),RED,"r");checks($("#chk-pauta"),PAUTA,"p");$("#gl-q").addEventListener("input",renderGloss);$("#rs-q").addEventListener("input",renderRes);$("#rs-modo").onclick=()=>{resTapado=!resTapado;renderRes();};
+checks($("#chk-cruce"),CRUCE,"z");renderFeed();$("#fb-filtro").onclick=()=>{feedSolo=!feedSolo;renderFeed();};checks($("#chk-ppt"),PPT,"t");checks($("#chk-red"),RED,"r");checks($("#chk-pauta"),PAUTA,"p");$("#gl-q").addEventListener("input",renderGloss);$("#rs-q").addEventListener("input",renderRes);$("#rs-modo").onclick=()=>{resTapado=!resTapado;renderRes();};
 aplicarMov();save();window.addEventListener("hashchange",route);route();
 </script>
 </body>
