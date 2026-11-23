@@ -126,6 +126,8 @@ ul.fb input:checked+span b{text-decoration:line-through;color:var(--muted)}
 #fb-list h4:first-child{border-top:0;padding-top:0;margin-top:0}
 #fb-cuenta{font-weight:600}
 .est{display:inline-block;font-size:.8rem;font-weight:700;padding:1px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap;vertical-align:1px}
+.queda{font-weight:600}
+.est-dlisto{color:var(--good)}.est-di2{color:var(--bad)}.est-dunir{color:var(--cell)}.est-ddecir{color:var(--warn)}
 .est-ok{color:var(--good)}.est-medias{color:var(--warn)}.est-falta{color:var(--bad)}.est-ver{color:var(--cell)}
 ul.checks .prop{font-weight:600;color:var(--cell)}
 ul.checks input:checked+span .prop{color:var(--muted)}
@@ -630,15 +632,16 @@ html.sin-mov #quiz-seccion .qz-confeti{display:none}
 
 <section class="view" id="v-informe">
   <h2>Informe final</h2>
-  <p class="lead">Al juntar los tres informes hay dos riesgos: dejar un comentario del profesor sin resolver y que una misma cifra salga distinta en dos capítulos.</p>
+  <p class="lead">Al juntar los tres informes hay dos riesgos: dejar un comentario del profesor sin resolver y que un mismo dato salga distinto en dos capítulos. Aquí está el estado de cada uno.</p>
   <div class="box stack"><h3>Comentarios del profesor, uno por uno</h3>
-    <p class="small">Cada comentario revisado contra el Informe 1 (v11), el Informe 2 (v24) y el Informe 3 (v2). Marquen la casilla cuando el grupo lo deje resuelto.</p>
+    <p class="small">Cada comentario revisado contra el Informe 1 (v12), el Informe 2 (v24) y el Informe 3 (v3). Marquen la casilla cuando el grupo lo deje resuelto.</p>
     <p id="fb-cuenta"></p>
     <div class="row"><button class="btn" id="fb-filtro" type="button" aria-pressed="false">Ver solo lo que falta</button></div>
     <div id="fb-list"></div></div>
-  <div class="box stack"><h3>Cifras que hoy no calzan entre informes</h3>
-    <p class="small">Encontradas al comparar el Informe 1 (v11), el Informe 2 (v24) y el Informe 3 (v2). Cada una trae una propuesta de cómo dejarla; la decisión es del grupo. Esta página ya usa siempre la versión más nueva.</p>
-    <ul class="checks" id="chk-cruce"></ul></div>
+  <div class="box stack"><h3>Una sola versión de cada dato</h3>
+    <p class="small">Cada incoherencia entre los informes ya tiene una decisión. Las del Informe 1 y del Informe 3 están corregidas en las versiones nuevas (Informe 1 v12 e Informe 3 v3). El Informe 2 está solo en PDF, así que sus cambios quedan anotados aquí.</p>
+    <p id="de-cuenta"></p>
+    <div id="de-list"></div></div>
   <div class="box stack"><h3>Lo que tiene que estar en la presentación final</h3><p class="small">Sale de los comentarios a las tres presentaciones. La estructura definitiva depende de la rúbrica.</p><ul class="checks" id="chk-ppt"></ul></div>
   <div class="box stack"><h3>Contenidos que pide la pauta del curso</h3><p class="small">Según la presentación de la primera clase. Revisen que cada uno esté en el documento final.</p><ul class="checks" id="chk-pauta"></ul></div>
   <div class="box stack"><h3>Redacción y formato</h3><ul class="checks" id="chk-red"></ul></div>
@@ -837,8 +840,8 @@ const PREGUNTAS = [
  ojoCon:"La diversificación es de largo plazo y no es prioridad. No la vendas como plan."},
 {id:"e08",tema:"Estrategia",tipo:"abierta",icono:"diana",
  pregunta:"¿Cómo controlan que la estrategia se cumpla?",
- respuestaModelo:"Con un Balanced Scorecard de cuatro perspectivas encadenadas. Un equipo capacitado permite procesos eficientes, que le dan al cliente el mismo valor a menor precio, y eso genera rentabilidad. Cada una tiene metas, como satisfacción sobre 80%.",
- puntosClave:[{texto:"Balanced Scorecard",keywords:["balanced","scorecard","bsc","cuadro de mando"]},{texto:"Cuatro perspectivas",keywords:["perspectiva","aprendizaje","procesos","financier"]},{texto:"Encadenadas: una permite la siguiente",keywords:["cadena","encaden","permite","genera"]},{texto:"Metas con número: satisfacción sobre 80%",keywords:["80","meta"]}],
+ respuestaModelo:"Con un Balanced Scorecard de cuatro perspectivas encadenadas. Un equipo capacitado permite procesos eficientes, que le dan al cliente el mismo valor a menor precio, y eso genera rentabilidad. Cada una tiene metas, como satisfacción de al menos 85%.",
+ puntosClave:[{texto:"Balanced Scorecard",keywords:["balanced","scorecard","bsc","cuadro de mando"]},{texto:"Cuatro perspectivas",keywords:["perspectiva","aprendizaje","procesos","financier"]},{texto:"Encadenadas: una permite la siguiente",keywords:["cadena","encaden","permite","genera"]},{texto:"Metas con número: satisfacción de al menos 85%",keywords:["80","meta"]}],
  ojoCon:"Se lee de abajo hacia arriba: aprendizaje, procesos, clientes y financiera."},
 {id:"e09",tema:"Estrategia",tipo:"alternativas",icono:"escudo",
  pregunta:"¿Cuál es la mayor amenaza del FODA?",
@@ -1132,7 +1135,7 @@ const PREGUNTAS = [
 {id:"m18",tema:"Marketing",tipo:"alternativas",icono:"megafono",
  pregunta:"¿Cuánto es el presupuesto de marketing del año 1?",
  opciones:["$23,3 millones","$2,3 millones","$233 millones"],correcta:0,
- explicacion:"Es el 3,5% de las ventas. El mayor ítem es Google Ads, con $6 millones. Desde el año 3 baja a cerca de $14 millones.",
+ explicacion:"Es el 3,5% de las ventas. El mayor ítem es Google Ads, con $6 millones. En el modelo financiero quedan $17,0 millones como gasto: lo que se paga una sola vez va a la inversión y las etiquetas QR al costo variable.",
  ojoCon:"Parte alto para darse a conocer y baja cuando la marca se consolida."},
 
 {id:"o09",tema:"Operaciones y personas",tipo:"abierta",icono:"lupa",
@@ -1220,9 +1223,9 @@ const PREGUNTAS = [
 {id:"m19",tema:"Marketing",tipo:"abierta",icono:"moneda",
  pregunta:"Una pyme no tiene $4.000.000 a la mano. ¿Qué facilidades de pago le dan?",
  pista:"Hay un dato de la encuesta, un socio y una forma de cobrar en dos partes.",
- respuestaModelo:"El 88% de los encuestados prefiere pagar en cuotas o con un pago mensual. Por eso trabajamos con un socio financiero, para que la cuota se acerque al ahorro en la cuenta de luz. REVIVA cobra el 50% al firmar y el resto al mes siguiente, contra la instalación o el pago del socio financiero.",
+ respuestaModelo:"El 88% de los encuestados prefiere pagar en cuotas o con un pago mensual. Por eso, desde el primer año se puede pagar en cuotas con un socio financiero, que le da el crédito a la pyme, para que la cuota se acerque al ahorro en la cuenta de luz. REVIVA cobra el 50% al firmar y el resto al mes siguiente, contra la instalación. Desde el año 3 sumamos un plan de pago mensual.",
  puntosClave:[{texto:"El 88% prefiere cuotas o pago mensual",keywords:["88"]},{texto:"Pago en cuotas con un socio financiero",keywords:["socio financiero","financiera","cuotas"]},{texto:"La cuota se acerca al ahorro en la cuenta de luz",keywords:["ahorro"]},{texto:"REVIVA cobra 50% al firmar y el resto al mes siguiente",keywords:["50%","50 %","mitad","al firmar"]}],
- ojoCon:"Falta definir quién es el socio financiero y en qué condiciones: [COMPLETAR]. El profesor pidió investigarlo."},
+ ojoCon:"Falta cerrar quién es el socio financiero: [COMPLETAR]. Opciones para cotizar: BancoEstado (Impacto Verde MiPymes) y los bancos que operan el Crédito Verde de Corfo. No digan que ya hay un acuerdo."},
 {id:"o14",tema:"Operaciones y personas",tipo:"alternativas",icono:"persona",
  pregunta:"¿Quién hace el control de recepción de los paneles en Santiago?",
  opciones:["El supervisor de calidad y bodega","El gerente comercial","Un laboratorio externo"],correcta:0,
@@ -2079,12 +2082,12 @@ const M=[
  com:[["¿Por qué liderazgo en costos y no diferenciación? La certificación los diferencia.","La certificación no nos permite cobrar más: nos permite igualar la confianza de un panel nuevo.\n• Un producto reacondicionado no puede venderse más caro que uno nuevo.\n• Nuestra ventaja es el costo: el insumo llega depreciado y a veces nos pagan por retirarlo.\n• Calza con Porter: rivalidad alta y comprador sensible al precio."]]},
 
 {inf:1,t:"El control: Balanced Scorecard",s:"Capítulo II, sección 11",
- lee:["El BSC se lee como una <b>cadena</b>, de abajo hacia arriba.","<b>Aprendizaje:</b> equipo técnico capacitado y alianzas.","<b>Procesos:</b> protocolo aplicado al 100% de los paneles y recuperación de al menos 50%.","<b>Clientes:</b> kit a dos tercios del precio y satisfacción sobre 80%.","<b>Financiera:</b> rentabilidad y participación de mercado, con metas concretas."],
+ lee:["El BSC se lee como una <b>cadena</b>, de abajo hacia arriba.","<b>Aprendizaje:</b> equipo técnico capacitado y alianzas.","<b>Procesos:</b> protocolo aplicado al 100% de los paneles y recuperación de al menos 50%.","<b>Clientes:</b> kit a dos tercios del precio y satisfacción de al menos 85%.","<b>Financiera:</b> rentabilidad y participación de mercado, con metas concretas."],
  cards:[["¿Cómo se lee el Balanced Scorecard?","Como una cadena: equipo capacitado (aprendizaje) → procesos eficientes y confiables → mismo valor a menor precio (clientes) → rentabilidad (financiera)."],
- ["¿Cuáles son las metas de la perspectiva de clientes?","Kit a cerca de dos tercios del precio de un sistema nuevo y satisfacción de clientes sobre 80%. Indicadores: precio como % de un sistema nuevo, índice de satisfacción y clientes nuevos por año."],
+ ["¿Cuáles son las metas de la perspectiva de clientes?","Kit a cerca de dos tercios del precio de un sistema nuevo y satisfacción de clientes de al menos 85%. Indicadores: precio como % de un sistema nuevo, índice de satisfacción y clientes nuevos por año."],
  ["¿Cuáles son las metas de procesos internos?","Autorización sanitaria, registro como gestor y respuesta de la SEC en el primer año. Protocolo aplicado al 100% de los paneles y recuperación de al menos 50%."],
  ["¿Cuáles son las metas de aprendizaje y crecimiento?","Todos los técnicos con curso de normativa SEC y formación en reacondicionamiento el primer año. Tres acuerdos de suministro y una alianza con un laboratorio acreditado."]],
- com:[["Explíquenme su Balanced Scorecard.","Se lee de abajo hacia arriba, como una cadena:\n• Aprendizaje: técnicos capacitados y alianzas.\n• Procesos: protocolo aplicado al 100% y recuperación de al menos 50%.\n• Clientes: kit a dos tercios del precio y satisfacción sobre 80%.\n• Financiera: rentabilidad y participación de mercado.\nCada perspectiva tiene metas con número y plazo."]]},
+ com:[["Explíquenme su Balanced Scorecard.","Se lee de abajo hacia arriba, como una cadena:\n• Aprendizaje: técnicos capacitados y alianzas.\n• Procesos: protocolo aplicado al 100% y recuperación de al menos 50%.\n• Clientes: kit a dos tercios del precio y satisfacción de al menos 85%.\n• Financiera: rentabilidad y participación de mercado.\nCada perspectiva tiene metas con número y plazo."]]},
 
 {inf:2,ses:"Sesión 3 · jue 26 nov",t:"Objetivos de marketing y segmentación",s:"Plan de Marketing, secciones 1.1 y 1.2",
  lee:["Los objetivos son <b>de marketing y no solo de venta</b>: conocimiento de marca, imagen, posicionamiento y satisfacción. Cada uno mide una sola cosa.","La <b>participación de mercado se mide sobre las ventas</b>: kits de REVIVA ÷ sistemas solares inscritos por empresas.","<b>El cliente:</b> pymes con local o galpón propio (no en edificios), con alto consumo de día y cuenta de luz de $150.000 o más.","<b>El nicho:</b> los proveedores comerciales parten en proyectos de 20 kWp. Las pymes más chicas quedan sin oferta.","Decide el dueño o socio, y decide por el ahorro."],
@@ -2757,7 +2760,7 @@ function helpBox(i){
 /* ---------- resumen del proyecto ---------- */
 const RES=[
 ["Idea de negocio","#m1",[
- ["Orden para presentarlo","Oportunidad, necesidad y problema: así lo pidió el profesor por escrito. El informe lo trae como problema, necesidad y oportunidad."],
+ ["Orden para presentarlo","En la defensa: oportunidad, necesidad y problema, como pidió el profesor. El documento sigue el orden de sus títulos: problema, necesidad y oportunidad."],
  ["Problema","El costo. A la pyme le sale caro pasarse a energía solar, y a la gran empresa le cuesta deshacerse de paneles que todavía funcionan."],
  ["Cuantificación del problema","Como máximo el 1,5% de las pymes tiene paneles. La luz subió 30–60% desde 2023. Habrá 284.906 toneladas de paneles en desuso a 2052."],
  ["Necesidad de las grandes empresas","Retirar sus paneles y demostrar qué hicieron con ellos: plan de cierre, Ley REP desde mayo de 2028, reputación y financiamiento verde."],
@@ -2786,8 +2789,8 @@ const RES=[
  ["Valores","Calidad, innovación, rigor técnico, sustentabilidad, transparencia y accesibilidad."],
  ["Ventaja competitiva","Eficiencia en costos: el mismo valor que un panel nuevo, a menor precio."],
  ["Estrategia genérica","Liderazgo en costos. No es diferenciación: un panel usado no se puede cobrar más caro que uno nuevo."],
- ["Crecimiento (Ansoff)","Penetración en los años 1 y 2. Nuevas regiones en los años 3 y 4. Nuevos servicios desde el año 3."],
- ["Control (Balanced Scorecard)","Cuatro perspectivas encadenadas: aprendizaje, procesos, clientes y financiera. Meta de satisfacción de clientes: 85%, sobre el piso de 80%."],
+ ["Crecimiento (Ansoff)","Penetración en los años 1 y 2. Nuevas regiones en los años 3 y 4. Nuevos servicios desde el año 3: mantención, pago mensual y renovación con descuento. Baterías desde el año 5."],
+ ["Control (Balanced Scorecard)","Cuatro perspectivas encadenadas: aprendizaje, procesos, clientes y financiera. Metas: 250 clientes al año 3, 350 kits al año 5, resultado positivo desde el año 2 y satisfacción de al menos 85%."],
  ["Forma legal","Sociedad por Acciones (SpA)."]]],
 ["Marketing","#m10",[
  ["Objetivos de marketing","30% del segmento conoce la marca; 70% la asocia con «confiable y certificada»; 60% la ve como la de menor precio con garantía; 85% de clientes satisfechos."],
@@ -2798,7 +2801,7 @@ const RES=[
  ["Posicionamiento","Por precio: la alternativa solar de menor precio para pymes, siempre junto al certificado y la garantía."],
  ["Producto","Kit Esencial (5 kWp), Kit Pyme (10 kWp) y Kit Pro (15 kWp), con inversor nuevo, instalación, trámite SEC y certificado."],
  ["Precio","$4.000.000, $6.500.000 y $9.000.000 con IVA. Estrategia de penetración: dos tercios de un sistema nuevo."],
- ["Forma de pago","El 88% prefiere cuotas o pago mensual. Se ofrece con un socio financiero, por definir. REVIVA cobra 50% al firmar y el resto al mes siguiente."],
+ ["Forma de pago","El 88% prefiere cuotas o pago mensual. Desde el año 1 hay cuotas con un socio financiero, que le da el crédito a la pyme. REVIVA cobra 50% al firmar y el resto contra la instalación. Desde el año 3 se suma un plan de pago mensual."],
  ["Plaza","Venta directa: un vendedor visita la pyme. Agentes a comisión amplían la cobertura."],
  ["Promoción","Evaluación de ahorro gratuita, Google Ads, redes sociales y casos reales."],
  ["Personas, procesos y evidencia física","Instaladores SEC, cuatro controles de calidad y un certificado con QR por panel."],
@@ -2807,7 +2810,8 @@ const RES=[
  ["Mercado (TAM, SAM y SOM)","298.929 pymes (18 millones de m²); 41.500 pymes (2,5 millones de m²); 130 pymes el primer año (7.800 m²)."],
  ["Pronóstico de ventas","130, 190, 250, 300 y 350 kits entre 2027 y 2031."],
  ["Participación de mercado","11% el año 1 y 14% el año 5, medida sobre las ventas."],
- ["Presupuesto de marketing","$23,3 M el año 1, el 3,5% de las ventas."]]],
+ ["Presupuesto de marketing","$23,3 M el año 1, el 3,5% de las ventas. En el modelo financiero quedan $17,0 M como gasto: la marca, la web y los letreros van a la inversión, y las etiquetas QR al costo variable."],
+ ["Gasto comercial","Marketing más comisiones de venta: $50,0 M el año 1 y $86,5 M el año 5. Crece con las ventas porque está puesto en los vendedores."]]],
 ["Personas y operaciones","#m14",[
  ["Dotación","15 personas el año 1 y 16 desde el año 2."],
  ["Cargos","CEO, 2 gerentes, 6 técnicos, 2 instaladores, 1 supervisor de calidad y bodega y 3 vendedores (4 desde el año 2)."],
@@ -2815,6 +2819,7 @@ const RES=[
  ["Política de personas","Atraer, desarrollar y mantener."],
  ["Externalización","Contabilidad, remuneraciones, prevención de riesgos, marketing digital, fletes y parte de la instalación."],
  ["Sedes","Hub técnico en Copiapó y bodega en Santiago."],
+ ["Por dónde se parte","La operación parte en el norte, donde están los paneles. Las ventas parten sobre todo en Santiago (~80%), con clientes ancla del norte (~20%)."],
  ["Flujo operacional","Retiro; pruebas y certificación en Copiapó; control y armado en Santiago; instalación y verificación en el local del cliente."],
  ["Control de calidad","Cuatro controles: certificación en Copiapó, recepción en Santiago, revisión del kit y verificación en terreno."],
  ["Recuperación de paneles","Meta de al menos 50% aptos. El modelo supone 55% aptos para kit y 10% grado C."],
@@ -2875,40 +2880,52 @@ function ensayo(){
 }
 
 /* ---------- informe final ---------- */
-const CRUCE=[
-["Kits al año 5: el BSC del Informe 1 dice 280 (~11% del mercado); los informes 2 y 3 dicen 350 (14%).","Propuesta: dejar 350 kits y 14% en el BSC."],
-["Kits al año 3: el Informe 1 dice 180 kits (objetivos y BSC); los informes 2 y 3 dicen 250.","Propuesta: dejar 250 en los objetivos estratégicos y en el BSC."],
-["Resultado operacional positivo: el Informe 1 lo pone desde el año 3; el plan financiero muestra EBITDA positivo desde el año 2 ($34,1 M).","Propuesta: «desde el año 2». Si se habla de utilidad neta, también es positiva el año 2."],
-["Tamaños de kit: el Informe 1 habla de kits de 5 y 10 kWp; los informes 2 y 3 tienen tres planes (5, 10 y 15 kWp).","Propuesta: nombrar los tres planes en la solución, el Canvas y la sección de productos."],
-["Cuenta de luz del cliente: el Informe 1 dice $300.000 a $1.000.000; el Informe 2 dice $150.000 en la segmentación.","Propuesta: dejar $150.000 a $1.000.000 en todo el documento."],
-["Dentro del Informe 2: la segmentación parte en $150.000, pero la síntesis del mercado objetivo dice «$300.000 a $1.000.000».","Propuesta: corregir la síntesis a $150.000. Es la contradicción más fácil de pillar."],
-["Satisfacción de clientes: «sobre 80%» en el Informe 1 y 85% en el Informe 2.","Propuesta: meta de 85%, que cumple el piso de 80% pedido para el BSC. Usar 85% en ambos."],
-["Dónde se parte: el Informe 1 y el Informe 2 dicen Santiago ~80% de las ventas y norte ~20%; el grupo también ha planteado partir por el norte.","Por decidir en grupo: que la respuesta oral diga lo mismo que el documento."],
-["Pago en cuotas: la solución del Informe 1 y la estrategia de precio del Informe 2 lo ofrecen desde el inicio; Ansoff (informes 1 y 2) y el pronóstico del Informe 3 lo ponen como producto nuevo del año 3.","Propuesta: separar las dos cosas. Cuotas con el socio financiero desde el año 1, y el «pago mensual» como producto nuevo del año 3. Y nombrar al socio financiero."],
-["Cargo de calidad: «Encargado de calidad y bodega» en el Informe 2; el profesor pidió «supervisor de calidad».","Propuesta: cambiarlo en la Tabla 9, el organigrama y los perfiles de cargo."],
-["Diversificación en Ansoff: Latinoamérica u otros equipos en el Informe 1; sistemas con baterías en el Informe 2.","Propuesta: dejar la del Informe 2 (baterías), que es más nueva y más concreta."],
-["Desarrollo de producto: el Informe 1 incluye reacondicionar inversores; el Informe 2 no.","Propuesta: sacarlo, salvo que el grupo quiera defenderlo."],
-["Financiamiento: el Informe 1 dice «postular a CORFO» en dos partes; el Informe 3 no considera fondos concursables.","Propuesta: en el Informe 1, cambiar a «crédito con garantía FOGAPE y aporte de socios»."],
-["Laboratorio móvil: el Informe 1 lo nombra como fuente de menor costo; los informes 2 y 3 hacen las pruebas en el hub y no lo presupuestan.","Propuesta: sacar «laboratorio móvil» de la ventaja competitiva."],
-["Recuperación de paneles: la meta es «al menos 50%» y el modelo financiero usa 55%.","No es contradicción si se explica: 50% es la meta mínima y 55% el supuesto. Decirlo en una frase."],
-["Leyes sociales: 7% fijo en el Informe 2; el Informe 3 las sube año a año por la reforma de pensiones.","Propuesta: dejar el presupuesto de RRHH del Informe 3."],
-["Etiquetas QR: están en el presupuesto de marketing del Informe 2 y como costo variable en el Informe 3.","Propuesta: dejarlas solo como costo variable."],
-["Otros ingresos: el Informe 2 da $98,8 M el año 1; el Informe 3 los recalcula (hasta 7% menos).","Propuesta: usar las cifras del Informe 3."],
-["Inversión de operaciones: $95,6 M en el Informe 2 frente al detalle por tipo de activo del Informe 3.","Propuesta: dejar solo la tabla del Informe 3, con los imprevistos en intangibles."]];
+const DECI=[
+["Kits vendidos","listo","130, 190, 250, 300 y 350 kits entre 2027 y 2031. Año 3: 250. Año 5: 350, cerca del 14% de las ventas de sistemas solares a empresas.","Informe 1: objetivos estratégicos y BSC decían 180 y 280. Ya corregido."],
+["Resultado operacional positivo","listo","Desde el segundo año: el EBITDA del año 2 es de $34,1 M.","Informe 1 decía «tercer año» en objetivos y BSC. Informe 3 lo comentaba como diferencia. Ya corregidos."],
+["Tamaños de kit","listo","Tres planes: Esencial (5 kWp), Pyme (10 kWp) y Pro (15 kWp).","Informe 1: solución, Canvas y productos decían «5 y 10 kWp». Ya corregido."],
+["Cuenta de luz del cliente","i2","Pymes que pagan entre $150.000 y $1.000.000 al mes.","Informe 1 (Canvas): ya corregido. Informe 2, sección 1.2, párrafo «En síntesis»: dice «$300.000 a $1.000.000» y debe decir «$150.000 a $1.000.000»."],
+["Satisfacción de clientes","listo","Al menos 85% de clientes satisfechos, en todo el documento. Cumple el piso de 80% pedido para el BSC.","Informe 1: objetivos y BSC decían «sobre 80%». Ya corregido."],
+["Por dónde se parte","decir","La operación parte en el norte: el hub está en Copiapó, donde están los paneles. Las ventas parten sobre todo en Santiago (~80%), con clientes ancla del norte (~20%).","Los informes ya dicen esto. Lo que cambia es la frase: no «partimos por el norte», sino «operamos desde el norte y vendemos sobre todo en Santiago»."],
+["Forma de pago","i2","Desde el año 1: pago en cuotas con un socio financiero, que le da el crédito a la pyme; REVIVA cobra 50% al firmar y el resto contra la instalación. Desde el año 3: un plan nuevo de pago mensual.","Informe 1 (Ansoff) e Informe 3 (pronóstico): ya corregidos. Informe 2, sección 1.6.2: falta decir quién es el socio. Opciones reales para cotizar: BancoEstado (línea Impacto Verde MiPymes) y los bancos que operan el Crédito Verde de Corfo."],
+["Cargo de calidad","i2","Supervisor de calidad y bodega.","Informe 2: cambiar «Encargado de calidad y bodega» en la Tabla 9, en el texto del organigrama y en los perfiles de cargo. Revisen también el dibujo del organigrama (Figura 5)."],
+["Imagen de marca","i2","Un solo atributo: que el 70% de los clientes asocie a REVIVA con «confiable». El certificado es la prueba, no un segundo atributo.","Informe 2, Tabla 1: dice «confiable y certificada» y debe decir «confiable»."],
+["Crecimiento (Ansoff)","listo","Desarrollo de producto en el año 3: plan de mantención, pago mensual y renovación con descuento. Diversificación en el año 5 o más: sistemas con baterías.","Informe 1 hablaba de reacondicionar inversores y de Latinoamérica. Ya corregido: queda igual al Informe 2."],
+["Financiamiento","listo","60% aporte de los socios y 40% crédito bancario con garantía FOGAPE. Sin fondos concursables.","Informe 1 decía «postular a CORFO» en los factores críticos y en el FODA. Ya corregido."],
+["Dónde se prueban los paneles","listo","Todo se prueba en el hub de Copiapó. Los lotes de Antofagasta y Tarapacá llegan por flete.","Informe 1 nombraba un «laboratorio móvil» que nadie presupuestó. Ya corregido en la solución y en la ventaja competitiva."],
+["Recuperación de paneles","decir","La meta mínima es que el 50% sea apto. El modelo financiero supone 55% apto para kit y 10% grado C.","No hay que cambiar texto. Hay que decirlo así: 50% es el piso que se valida en el piloto y 55% es el supuesto del modelo."],
+["Presupuesto de marketing","unir","El plan de marketing suma $23,3 M el año 1. En el modelo financiero quedan $17,0 M como gasto del año, porque la marca, la web, los letreros y la rotulación pasan a la inversión, y las etiquetas QR al costo variable.","Al unir los informes: dejar la Tabla 8 y agregar esta frase, para que nadie vea dos cifras distintas."],
+["Leyes sociales, otros ingresos e inversión","unir","Manda el plan financiero: leyes sociales de 7,1% a 10,0%, otros ingresos de $99,0 M el año 1 e inversión de $275,6 M por tipo de activo.","Al unir los informes: actualizar en el capítulo de marketing y operaciones la Tabla 10 (7% fijo), los otros ingresos (del año 2 en adelante bajan hasta 7%) y la inversión de operaciones ($95,6 M)."],
+["Orden del capítulo I","listo","El documento sigue el orden de sus títulos: problema, necesidad y oportunidad. Parte con una frase que cuenta la cadena completa. En la defensa oral se cuenta como pidió el profesor: oportunidad, necesidad y problema.","Informe 1, sección 1: se agregó la frase guía. Confirmen con el profesor que con eso basta."],
+["Tasa del flujo del inversionista","decir","WACC de 6,98%, porque ese flujo ya incluye el crédito. Así el VAN y la TIR del inversionista quedan sobre los del flujo puro, como pidió el profesor.","No cambia el texto. Lleven preparada la respuesta si preguntan por Ke: el VAN daría cerca de $280,8 M, igual positivo."],
+["Redacción","listo","Sin menciones a «la clase».","Informe 1, anexos: decía «revisada en clase» dos veces. Ya corregido."]
+];
+const DECI_EST={listo:"Corregido",i2:"Falta en el Informe 2",unir:"Se resuelve al unir",decir:"Cambia cómo se dice"};
+function renderDeci(){
+  const host=$("#de-list");host.innerHTML="";const n={listo:0,i2:0,unir:0,decir:0};DECI.forEach(x=>n[x[1]]++);
+  $("#de-cuenta").textContent=n.listo+" ya corregidas en los informes 1 y 3, "+n.i2+" faltan en el Informe 2, "+n.unir+" se resuelven al unir y "+n.decir+" solo cambian cómo se dice.";
+  const ul=el("ul","fb");
+  DECI.forEach((x,i)=>{const k="de"+i,li=el("li"),l=el("label"),c=el("input");c.type="checkbox";c.id=k;c.checked=!!S.chk[k];
+    c.onchange=()=>{S.chk[k]=c.checked;save();};l.appendChild(c);
+    const sp=el("span");sp.appendChild(txt("b",null,x[0]));sp.appendChild(document.createTextNode(" "));sp.appendChild(txt("span","est est-d"+x[1],DECI_EST[x[1]]));sp.appendChild(el("br"));
+    sp.appendChild(txt("span","queda",x[2]));sp.appendChild(el("br"));sp.appendChild(txt("span","det",x[3]));
+    l.appendChild(sp);li.appendChild(l);ul.appendChild(li);});
+  host.appendChild(ul);
+}
 const FEED=[
 ["Informe 1: comentarios escritos",[
- ["Respetar el orden: oportunidad, necesidad y problema.","ver","El contenido está, pero el Informe 1 va en el orden problema (§1), necesidad (§2.1 y 2.2) y oportunidad (§2.3). El comentario escrito pide oportunidad, necesidad y problema. Confirmen cuál manda para el documento. En la defensa, cuéntenlo en el orden del comentario."],
+ ["Respetar el orden: oportunidad, necesidad y problema.","ver","El documento sigue el orden de sus títulos (problema, necesidad y oportunidad) y ahora parte con una frase que cuenta la cadena completa. En la defensa se cuenta en el orden del comentario. Confirmen con el profesor que con eso basta."],
  ["La oportunidad nace del macroentorno: elegir el factor más relevante.","ok","§2.3 la ancla al factor legal y ambiental: la Ley REP incluye los paneles desde 2028."],
  ["Necesidad de las grandes empresas (retiro de paneles) y de las pymes (cambio de sistema energético).","ok","§2.1 y §2.2, con esos mismos nombres."],
  ["El problema es el costo.","ok","Cap. I, §1: «El problema es el costo, para los dos actores»."],
- ["Canvas: definir bien el cliente (empresas, no personas). ¿Qué es una empresa pequeña y cuántas hay?","ok","§5.1: pequeñas, con ventas de 2.400 a 25.000 UF (260.575 empresas), y medianas, de 25.000 a 100.000 UF (38.354). Ojo: ese mismo párrafo todavía dice cuentas de luz de $300.000 a $1.000.000."],
+ ["Canvas: definir bien el cliente (empresas, no personas). ¿Qué es una empresa pequeña y cuántas hay?","ok","§5.1: pequeñas, con ventas de 2.400 a 25.000 UF (260.575 empresas), y medianas, de 25.000 a 100.000 UF (38.354). La cuenta de luz ya quedó en $150.000 a $1.000.000."],
  ["Propuesta de valor por precio y conveniencia. No es un eslogan.","ok","§5.2: «precio y conveniencia» para pymes y «conveniencia en el retiro» para generadoras."],
  ["PESTEL del macroentorno (crecimiento, inflación, tipo de cambio, cesantía), no de la industria. Concluir si es favorable.","ok","§1.2 trae PIB, inflación, dólar y desocupación. §1.7 concluye que el macroentorno es favorable."],
  ["Porter: decir qué industria se analiza (paneles solares) y analizar la industria, no el negocio.","ok","§2 define la industria según el grupo objetivo y deja lo de REVIVA para §2.6."],
  ["Misión: grupo objetivo, lo que venden, calidad, innovación y equipo comprometido.","ok","§7.1 nombra las cinco cosas."],
  ["Estrategia genérica: liderazgo en costos.","ok","§10.2, con el desafío de igualar el valor a menor precio."],
- ["La ventaja competitiva es diferenciación o eficiencia en costos, según la estrategia.","ok","§9: eficiencia en costos. Ojo: la sostiene en un «laboratorio móvil» que no está en los informes 2 y 3."],
- ["El BSC se arma desde los objetivos estratégicos, la propuesta de valor, la estrategia y la ventaja.","medias","§11 lo declara y tiene metas concretas, pero las metas quedaron viejas: 180 clientes al año 3, 280 kits al año 5 y resultado positivo desde el año 3. Hoy son 250, 350 y año 2."]]],
+ ["La ventaja competitiva es diferenciación o eficiencia en costos, según la estrategia.","ok","§9: eficiencia en costos. Ya no nombra el laboratorio móvil."],
+ ["El BSC se arma desde los objetivos estratégicos, la propuesta de valor, la estrategia y la ventaja.","ok","§11 lo declara y sus metas ya calzan con el plan financiero: 250 clientes al año 3, 350 kits al año 5, resultado positivo desde el año 2 y satisfacción de al menos 85%."]]],
 ["Informe 2: comentarios escritos",[
  ["Objetivos más de marketing y menos de venta: darse a conocer, imagen, posicionamiento y satisfacción.","ok","Tabla 1: los cuatro primeros objetivos son de marketing. Ventas, participación y crecimiento van después."],
  ["Imagen de marca: son dos objetivos en uno, no es específico.","medias","Ahora es un solo objetivo: que el 70% de los clientes asocie la marca con «confiable y certificada». El atributo sigue siendo doble. Para cerrar el punto, dejen un solo atributo."],
@@ -2919,11 +2936,11 @@ const FEED=[
  ["Aumentar el sueldo del vendedor.","ver","Hoy: base de $1.000.000 más 3% de comisión. No tengo la versión anterior para comparar. La base es igual a la del técnico y menor que la del cargo de calidad ($1.100.000). Con unas 3 ventas al mes, la comisión suma cerca de $500.000 (estimación con cifras del informe). Conviene escribir el ingreso total esperado."]]],
 ["Presentación de marketing, personas y operaciones",[
  ["Estructurar la estrategia de mercado: introducción e hipótesis.","ok","El Informe 2 tiene Introducción y §1.3.3 Hipótesis de investigación (H0 y H1)."],
- ["Investigar las facilidades de pago y revisar el modelo de negocio.","medias","El 88% prefiere cuotas y el informe habla de un «socio financiero», pero no dice quién es ni en qué condiciones. Además, la solución y la estrategia de precio lo dan desde el inicio, y Ansoff y el pronóstico lo ponen como producto nuevo del año 3."],
+ ["Investigar las facilidades de pago y revisar el modelo de negocio.","medias","Ya quedó ordenado: cuotas con un socio financiero desde el año 1 y pago mensual como producto nuevo del año 3. Falta que el Informe 2 diga quién es el socio. Opciones para cotizar: BancoEstado (Impacto Verde MiPymes) y los bancos que operan el Crédito Verde de Corfo."],
  ["Mostrar organigrama, plan de RRHH, plan de marketing y las 7P.","medias","En el informe están: Figura 5, capítulo 2, capítulo 1 y §1.6. Falta llevarlos a la presentación final."],
  ["Cambiar «encargado» por «supervisor de calidad».","falta","El Informe 2 sigue diciendo «Encargado de calidad y bodega» en la Tabla 9, en el texto del organigrama y en los perfiles de cargo. Esta página ya dice supervisor."],
  ["Confirmar si el otro 70% de los $60 millones de operaciones es costo de venta.","ver","No encuentro esos $60 millones ni ese 70% en las versiones actuales. Hoy el Informe 3 separa costos variables ($477,2 M el año 1), costos fijos de operación ($179,3 M) y gastos de administración y ventas. Díganme a qué lámina se refería."],
- ["Subir el presupuesto de marketing, con foco en los vendedores.","ver","Hoy son $23,3 M el año 1 (3,5% de las ventas) y bajan a $14,5 M el año 5 (0,8%), mientras las ventas casi se triplican. Las comisiones ($26,7 M el año 1) están en RRHH. No tengo la versión anterior para saber si subió."]]],
+ ["Subir el presupuesto de marketing, con foco en los vendedores.","ver","No tengo la versión anterior para saber si subió. Hoy son $23,3 M el año 1 y bajan a $14,5 M el año 5. La respuesta que conecta todo: el gasto comercial sí crece con las ventas, porque está puesto en los vendedores. Marketing más comisiones suman $50,0 M el año 1 y $86,5 M el año 5."]]],
 ["Presentación del plan financiero",[
  ["Solo tres objetivos.","ok","Informe 3, Tabla 1: rentabilidad, equilibrio y recuperación."],
  ["Especificar la inversión inicial (maquinaria y lo demás).","ok","Informe 3, Tabla 6: detalle por tipo de activo, con los imprevistos en intangibles."],
@@ -2953,6 +2970,7 @@ const PPT=[
 "Plan de recursos humanos: dotación, sueldos y política de personas.",
 "Plan de marketing: objetivos, segmento, posicionamiento por precio y presupuesto.",
 "Oportunidad, necesidad y problema, en ese orden.",
+"Una sola frase para el inicio: operamos desde el norte y vendemos sobre todo en Santiago.",
 "Tres objetivos financieros, no más.",
 "Inversión inicial por tipo de activo.",
 "Crédito sin gracia y con los bancos nombrados.",
@@ -3000,7 +3018,7 @@ function route(){
   prog();window.scrollTo(0,0);
 }
 $("#en-next").onclick=ensayo;$("#en-inf").onchange=ensayo;
-checks($("#chk-cruce"),CRUCE,"z");renderFeed();$("#fb-filtro").onclick=()=>{feedSolo=!feedSolo;renderFeed();};checks($("#chk-ppt"),PPT,"t");checks($("#chk-red"),RED,"r");checks($("#chk-pauta"),PAUTA,"p");$("#gl-q").addEventListener("input",renderGloss);$("#rs-q").addEventListener("input",renderRes);$("#rs-modo").onclick=()=>{resTapado=!resTapado;renderRes();};
+renderDeci();renderFeed();$("#fb-filtro").onclick=()=>{feedSolo=!feedSolo;renderFeed();};checks($("#chk-ppt"),PPT,"t");checks($("#chk-red"),RED,"r");checks($("#chk-pauta"),PAUTA,"p");$("#gl-q").addEventListener("input",renderGloss);$("#rs-q").addEventListener("input",renderRes);$("#rs-modo").onclick=()=>{resTapado=!resTapado;renderRes();};
 aplicarMov();save();window.addEventListener("hashchange",route);route();
 </script>
 </body>
